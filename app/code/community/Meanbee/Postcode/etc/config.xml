@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Meanbee_Postcode
+ *
+ * This module was developed by Meanbee Internet Solutions.  If you require any
+ * support or have any questions please contact us at support@meanbee.com.
+ *
+ * @category   Meanbee
+ * @package    Meanbee_Postcode
+ * @author     Meanbee Internet Solutions <support@meanbee.com>
+ * @copyright  Copyright (c) 2009 Meanbee Internet Solutions (http://www.meanbee.com)
+ * @license    Single Site License, requiring consent from Meanbee Internet Solutions
+ */
+-->
+<config>
+	<modules>
+		<Meanbee_Postcode>
+			<version>1.0.4</version>
+		</Meanbee_Postcode>
+	</modules>
+	
+	<global>
+		<models>
+			<postcode>
+				<class>Meanbee_Postcode_Model</class>
+			</postcode>
+		</models>
+		<blocks>
+			<postcode>
+				<class>Meanbee_Postcode_Block</class>
+			</postcode>
+		</blocks>
+		
+		<helpers>
+			<postcode>
+				<class>Meanbee_Postcode_Helper</class>
+			</postcode>
+		</helpers>
+	</global>
+	
+	<frontend>
+		<routers>
+			<postcode>
+				<use>standard</use>
+				<args>
+						<module>Meanbee_Postcode</module>
+						<frontName>postcode</frontName>
+				</args>
+			</postcode>
+		</routers>
+		<layout>
+			<updates>
+				<postcode>
+						<file>postcode.xml</file>
+				</postcode>
+			</updates>
+		</layout>
+	</frontend>
+	
+	<adminhtml>
+		<acl>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<postcode translate="title" module="postcode">
+											<title>Address Finder Section</title>
+										</postcode>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+</config>

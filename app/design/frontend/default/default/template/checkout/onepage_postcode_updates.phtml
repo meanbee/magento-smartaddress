@@ -1,0 +1,16 @@
+<script type="text/javascript">
+//<![CDATA[
+    /* Set default country (Optional) */
+    $('billing:country_id').value = 'GB';
+    billingRegionUpdater.update();
+		
+    $('shipping:country_id').value = 'GB';
+    shippingRegionUpdater.update();
+		
+		var BASE_URL = '<?php echo $this->getUrl()?>';
+	
+		/* Activate the listeners */
+		postcode_observe('billing');
+		postcode_observe('shipping');
+//]]>
+</script>

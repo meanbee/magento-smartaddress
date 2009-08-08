@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Meanbee_Postcode
+ *
+ * This module was developed by Meanbee Internet Solutions.  If you require any
+ * support or have any questions please contact us at support@meanbee.com.
+ *
+ * @category   Meanbee
+ * @package    Meanbee_Postcode
+ * @author     Meanbee Internet Solutions <support@meanbee.com>
+ * @copyright  Copyright (c) 2009 Meanbee Internet Solutions (http://www.meanbee.com)
+ * @license    Single Site License, requiring consent from Meanbee Internet Solutions
+ */
+-->
+<config>
+	<sections>
+		<postcode translate="label" module="postcode">
+			<label>Address Finder</label>
+			<tab>service</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>200</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<banner>
+					<label>Module Information</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>
+					<![CDATA[
+						<a href="http://www.postcodeanywhere.co.uk/"><img src="http://www.postcodeanywhere.co.uk/images/dynamic/partnerlogo.aspx?partner=indiv52356" width=200 height=40 border=0 alt="Postcode Anywhere"></a>
+						<br />This module was developed by <a href="http://www.meanbee.com">Meanbee Internet Solutions</a>.
+						If you require any support, please contact us at <a href="mailto:support@meanbee.com">support@meanbee.com</a> or <a href="http://getsatisfaction.com/meanbee/products/meanbee_postcode_address_autofill_magento_module">getsatifaction</a>.  We have a <a href="http://meanbee.com/newsletter">newsletter</a> and use <a href="http://twitter.com/meanbeeuk">twitter</a>.
+					]]></comment>
+				</banner>
+				<auth translate="label" module="postcode">
+					<label>Authentication</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<account translate="label">
+							<label>Account Key</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</account>
+						<license translate="label">
+							<label>License Key</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</license>
+					</fields>
+				</auth>
+				<options translate="label" module="postcode">
+					<label>Options</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<security translate="label">
+							<label>Enable Security?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Enabling security will cause the module check that a request for a postcode check originated from this store before fulfilling the request.  <b>Note:</b> This is by no means foolproof.</comment>
+						</security>
+					</fields>
+				</options>
+			</groups>
+		</postcode>
+	</sections>
+</config>
