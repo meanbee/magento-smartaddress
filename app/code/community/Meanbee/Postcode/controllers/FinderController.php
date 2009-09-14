@@ -45,7 +45,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
     public function multipleAction() {
         header("Content-type: application/json");
 
-        $postcode = strtolower(preg_replace("/[^a-zA-Z0-9s]/", "", str_replace(' ', '', $_GET['postcode'])));
+        $postcode = strtolower(preg_replace("/[^a-zA-Z0-9]/", "", str_replace(' ', '', $_GET['postcode'])));
 
         if (!empty($postcode)) {
             $call = Mage::getModel('postcode/call');
