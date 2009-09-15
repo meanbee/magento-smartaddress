@@ -14,7 +14,7 @@
  * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
-class Meanbee_Postcode_US_Model_Call {    
+class Meanbee_Postcode_Model_Call {    
     public function findMultipleByPostcode($postcode, $building, $country) {
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
