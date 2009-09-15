@@ -1,27 +1,37 @@
 <?php
 /**
- * Meanbee_Postcode
+ * Meanbee_Postcode_US
  *
- * This module was developed by Meanbee Internet Solutions.  If you require any
+ * This module was developed by Meanbee Internet Solutions Limited.  If you require any
  * support or have any questions please contact us at support@meanbee.com.
  *
  * Portions of this software uses code found at:
  *   - http://www.postcodeanywhere.co.uk/developers
  *
  * @category   Meanbee
- * @package    Meanbee_Postcode
+ * @package    Meanbee_Postcode_US
  * @author     Meanbee Internet Solutions <support@meanbee.com>
- * @copyright  Copyright (c) 2009 Meanbee Internet Solutions (http://www.meanbee.com)
- * @license    Single Site License, requiring consent from Meanbee Internet Solutions
+ * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
+ * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
-class Meanbee_Postcode_Model_Call {    
-    public function findMultipleByPostcode($postcode) {
+class Meanbee_Postcode_US_Model_Call {    
+    public function findMultipleByPostcode($postcode, $building, $country) {
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
         
         if (!empty($license) && !empty($account)) {
             try {
-                $result = $this->_submitFindAddressesRequest($postcode, $account, $license, '');
+                if (strcmp($country, "United Kingdom") == 0) {
+                    $result = $this->_submitFindAddressesRequestUK($postcode, $account, $license, '');
+                } elseif (strcmp($country, "United States") == 0) {
+                    if (isset($building)) {
+                        $result = $this->_submitFindAddressesRequestUS($building, $postcode, $account, $license, '');
+                    } else {
+                        return $this->_error("No building given.");
+                    }
+                } else {
+                    return $this->_error("Unable to find address");
+                }
                 return $this->_success($result);
             } catch (Exception $e) {
                 return $this->_error($e->getMessage());
@@ -31,7 +41,12 @@ class Meanbee_Postcode_Model_Call {
         }
     }
     
-    public function findSingleAddressById($id) {        
+    
+    /*
+     * Takes Address ID and country code and returns complete
+     * address information for ID in that country. 
+     */
+    public function findSingleAddressById($id, $country) {        
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
         
@@ -39,7 +54,16 @@ class Meanbee_Postcode_Model_Call {
             $id = (int) $id;
             
             try {
-                $result = $this->_submitFindSingleAddressRequest($id, 'english', 'simple', $account, $license, '', '');
+                $result = array();
+
+                //Find addresses (different call depending on country)
+                if (strcmp($country == "United Kingdom") == 0) {
+                    $result = $this->_submitFindSingleAddressRequestUK($id, 'english', 'simple', $account, $license, '', '');
+                } elseif (strcmp($country == "United States") == 0) {
+                    $result = $this->_submitFindSingleAddressRequestUS($id, $account, $license, '');
+                }
+
+                // Check results
                 if (count($result)) {
                     return $this->_success($result[0]);
                 } else {
@@ -68,9 +92,10 @@ class Meanbee_Postcode_Model_Call {
         ));
     }
     
-    protected function _submitFindAddressesRequest($postcode, $account_code, $license_code, $machine_id) {
+    protected function _submitFindAddressesRequestUK($postcode, $account_code, $license_code, $machine_id) {
         //Built with help from James at http://www.omlet.co.uk/
-        //Build the url
+        
+        //Build UK lookup URL
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
         $url .= "&action=lookup";
         $url .= "&type=by_postcode";
@@ -78,6 +103,7 @@ class Meanbee_Postcode_Model_Call {
         $url .= "&account_code=" . urlencode($account_code);
         $url .= "&license_code=" . urlencode($license_code);
         $url .= "&machine_id=" . urlencode($machine_id);
+        
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
         //Check for an error
@@ -96,9 +122,45 @@ class Meanbee_Postcode_Model_Call {
         return $output;
     }
 
-    protected function _submitFindSingleAddressRequest($id, $language, $style, $account_code, $license_code, $machine_id, $options) {
+    /*
+     * Find addresses in the US given building and zipcode
+     */
+    protected function _submitFindAddressesRequestUS($building, $postcode, $account_code, $license_code, $machine_id) {
         //Built with help from James at http://www.omlet.co.uk/
-        //Build the url
+   
+        //Build US lookup URL
+        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/ByBuilding?";
+        $url .= "Building=" . urlencode($building);
+        $url .= "&CityOrZIP=" . urlencode($postcode);
+        $url .= "&AccountCode=" . urlencode($account_code);
+        $url .= "&LicenseKey=" . urlencode($license_code);
+        $url .= "&MachineId=" . urlencode($machine_id);
+ 
+        //Make the request
+        $data = simplexml_load_string(file_get_contents($url));
+ 
+        //Check for an error
+        if ($data->Schema['Items']==2) {
+            throw new exception ($data->Data->Item['message']);
+        }
+     
+        //Create the response
+        foreach ($data->Data->children() as $row) {
+            $rowItems="";
+            foreach($row->attributes() as $key => $value) {
+                $rowItems[$key]=strval($value);
+            }
+            $output[] = $rowItems;
+        }
+      
+        //Return the result
+        return $output;
+    }
+
+    protected function _submitFindSingleAddressRequestUK($id, $language, $style, $account_code, $license_code, $machine_id, $options) {
+        //Built with help from James at http://www.omlet.co.uk/
+        
+        //Build UK ID lookup URL
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
         $url .= "&action=fetch";
         $url .= "&id=" . urlencode($id);
@@ -122,6 +184,37 @@ class Meanbee_Postcode_Model_Call {
             }
             $output[] = $rowItems;
         }
+        //Return the result
+        return $output;
+    }
+
+    protected function _submitFindSingleAddressRequestUS($id, $account_code, $license_code, $machine_id) {
+        //Built with help from James at http://www.omlet.co.uk/
+        
+        //Build US ID lookup URL
+        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/FetchAddress?";
+        $url .= "Id=" . urlencode($id);
+        $url .= "&AccountCode=" . urlencode($account_code);
+        $url .= "&LicenseKey=" . urlencode($license_code);
+        $url .= "&MachineId=" . urlencode($machine_id);
+      
+        //Make the request
+        $data = simplexml_load_string(file_get_contents($url));
+      
+        //Check for an error
+        if ($data->Schema['Items']==2) {
+            throw new exception ($data->Data->Item['message']);
+        }
+       
+        //Create the response
+        foreach ($data->Data->children() as $row) {
+            $rowItems="";
+            foreach($row->attributes() as $key => $value) {
+                $rowItems[$key]=strval($value);
+            }
+            $output[] = $rowItems;
+        }
+        
         //Return the result
         return $output;
     }
