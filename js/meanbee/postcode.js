@@ -55,7 +55,7 @@ function postcode_fillFields(id, a) {
 			var j = t.responseJSON;
 			
 			if (!j.error) {
-				if (typeof(j.content.coujntry) != "undefined") {
+				if (typeof(j.content.country) != "undefined") {
                     $(a + ':country_id').value = j.content.country;
 				} else {
                     $(a + ':country_id').value = 'GB;
