@@ -58,7 +58,7 @@ function postcode_fillFields(id, a) {
 				if (typeof(j.content.country) != "undefined") {
                     $(a + ':country_id').value = j.content.country;
 				} else {
-                    $(a + ':country_id').value = 'GB;
+                    $(a + ':country_id').value = 'GB';
                 }
                 eval(a + 'RegionUpdater.update();');
 
