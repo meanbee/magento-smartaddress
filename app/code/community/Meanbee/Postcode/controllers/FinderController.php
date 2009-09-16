@@ -47,14 +47,14 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
         
         //Retrieve fields
         $postcode = strtolower(preg_replace("/[^a-zA-Z0-9]/", "", str_replace(' ', '', $_GET['postcode'])));
-        $building = isset($_GET['building']) ? $_GET['building'] : '';
+        $street = isset($_GET['street']) ? $_GET['street'] : '';
         $country = $_GET['country'];
 
         // Aslong as have data we need, call actions
         if (!empty($postcode)) {
             if (!empty($country)) {
                 $call = Mage::getModel('postcode/call');
-                echo $call->findMultipleByPostcode($postcode, $building, $country);
+                echo $call->findMultipleByPostcode($postcode, $street, $country);
             } else {
                 echo Zend_Json::encode(array(
                     "error" => true,

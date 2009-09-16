@@ -15,7 +15,7 @@
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
 class Meanbee_Postcode_Model_Call {    
-    public function findMultipleByPostcode($postcode, $building, $country) {
+    public function findMultipleByPostcode($postcode, $street, $country) {
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
         
@@ -24,10 +24,10 @@ class Meanbee_Postcode_Model_Call {
                 if (strcmp($country, "United Kingdom") == 0) {
                     $result = $this->_submitFindAddressesRequestUK($postcode, $account, $license, '');
                 } elseif (strcmp($country, "United States") == 0) {
-                    if (isset($building)) {
-                        $result = $this->_submitFindAddressesRequestUS($building, $postcode, $account, $license, '');
+                    if (isset($street)) {
+                        $result = $this->_submitFindAddressesRequestUS($street, $postcode, $account, $license, '');
                     } else {
-                        return $this->_error("No building given.");
+                        return $this->_error("No street given.");
                     }
                 } else {
                     return $this->_error("Unable to find address");
@@ -125,12 +125,12 @@ class Meanbee_Postcode_Model_Call {
     /*
      * Find addresses in the US given building and zipcode
      */
-    protected function _submitFindAddressesRequestUS($building, $postcode, $account_code, $license_code, $machine_id) {
+    protected function _submitFindAddressesRequestUS($street, $postcode, $account_code, $license_code, $machine_id) {
         //Built with help from James at http://www.omlet.co.uk/
    
         //Build US lookup URL
-        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/ByBuilding?";
-        $url .= "Building=" . urlencode($building);
+        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/ByStreet?";
+        $url .= "Street=" . urlencode($street);
         $url .= "&CityOrZIP=" . urlencode($postcode);
         $url .= "&AccountCode=" . urlencode($account_code);
         $url .= "&LicenseKey=" . urlencode($license_code);
