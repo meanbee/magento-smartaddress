@@ -1,30 +1,34 @@
-/**
- * Meanbee_Postcode
+/*
+ * Meanbee_Postcode_US
  *
- * This module was developed by Meanbee Internet Solutions.  If you require any
+ * This module was developed by Meanbee Internet Solutions Limited.  If you require any
  * support or have any questions please contact us at support@meanbee.com.
  *
  * @category   Meanbee
- * @package    Meanbee_Postcode
- * @author     Meanbee Internet Solutions <support@meanbee.com>
- * @copyright  Copyright (c) 2009 Meanbee Internet Solutions (http://www.meanbee.com)
- * @license    Single Site License, requiring consent from Meanbee Internet Solutions
+ * @package    Meanbee_Postcode_US
+ * @author     Meanbee Internet Solutions Limited <support@meanbee.com>
+ * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
+ * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
 
 function postcode_observe(a) {
 	$('meanbee:' + a + '_address_find').observe('click', function (e) {
-		var v = $F(a + ':postcode');
-		if (v != '') {
+		var postcode = $F(a + ':postcode');
+		var country = $F(a + ':country_id');
+        var street = $F(a + ':street1');
+        if (postcode != '' || country != '') {
 			$('meanbee:' + a + '_address_selector').innerHTML = "Loading..";
-			postcode_fetchOptions(v, a);
+			postcode_fetchOptions(postcode, street, country, a);
 		}
 	});
 }
 
-function postcode_fetchOptions(p, a) {
+function postcode_fetchOptions(p, s, c, a) {
 	new Ajax.Request(BASE_URL + 'postcode/finder/multiple/', {
 		method: 'get',
-		parameters: 'postcode=' + p,
+		parameters: 'postcode=' + p
+                    + '&street=' + s
+                    + '&country=' + c,
 		onSuccess: function(t) {
 			var j = t.responseJSON;
 
@@ -51,8 +55,12 @@ function postcode_fillFields(id, a) {
 			var j = t.responseJSON;
 			
 			if (!j.error) {
-				$(a + ':country_id').value = 'GB';
-				eval(a + 'RegionUpdater.update();');
+				if (typeof(j.content.coujntry) != "undefined") {
+                    $(a + ':country_id').value = j.content.country;
+				} else {
+                    $(a + ':country_id').value = 'GB;
+                }
+                eval(a + 'RegionUpdater.update();');
 
 				if (typeof(j.content.line1) != "undefined") {
 					$(a + ':street1').value = j.content.line1;
