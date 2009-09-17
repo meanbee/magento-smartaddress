@@ -51,7 +51,7 @@ function postcode_fillFields(id, country, a) {
 	new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
 		method: 'get',
 		parameters: 'id=' + id +
-                    '&country' + country,
+                    '&country=' + country,
 		onSuccess: function(t) {
 			var j = t.responseJSON;
 			
