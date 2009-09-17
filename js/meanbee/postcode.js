@@ -16,7 +16,7 @@ function postcode_observe(a) {
 		var postcode = $F(a + ':postcode');
 		var country = $F(a + ':country_id');
         var street = $F(a + ':street2');
-        if (postcode != '' || country != '') {
+        if (postcode != '' && country != '') {
 			$('meanbee:' + a + '_address_selector').innerHTML = "Loading..";
 			postcode_fetchOptions(postcode, street, country, a);
 		}
