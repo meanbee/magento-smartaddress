@@ -54,7 +54,16 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
         if (!empty($postcode)) {
             if (!empty($country)) {
                 $call = Mage::getModel('postcode/call');
-                echo $call->findMultipleByPostcode($postcode, $street, $country);
+                $countryCodes = Mage::getSingleton('postcode/countrycodes');
+                $country = $countryCodes->convertCountryCode($country);
+                if (is_null($country)) {
+                    echo Zend_Json::encode(array(
+                        "error" => true,
+                        "content" => "Invalid country provided"
+                    ));
+                } else {
+                    echo $call->findMultipleByPostcode($postcode, $street, $country);
+                }
             } else {
                 echo Zend_Json::encode(array(
                     "error" => true,
@@ -77,9 +86,17 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
             if (isset($_GET['country'])) {
                 $id = (int) $_GET['id'];
                 $country = $_GET['country'];
-
-                $call = Mage::getModel('postcode/call');
-                echo $call->findSingleAddressById($id, $country);
+                $countryCodes = Mage::getSingleton('postcode/countrycodes');
+                $country = $countryCodes->convertCountryCode($country);
+                if (is_null($country)) {
+                    echo Zend_Json::encode(array(
+                        "error" => true,
+                        "content" => "Invalid country provided"
+                    ));
+                } else {
+                    $call = Mage::getModel('postcode/call');
+                    echo $call->findSingleAddressById($id, $country);
+                }
                 exit;
             } else {
                 echo Zend_Json::encode(array(
