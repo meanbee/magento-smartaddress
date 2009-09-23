@@ -14,30 +14,9 @@
 class Meanbee_Postcode_Model_CountryCodes {
     
     public function covertCountryCode($country2) {
-        $country3 = $this->$countries[$country2);
-        
-        if(is_null($country3)) {
-            return $this->_success($country3); 
-        } else {
-            return $this->_error($country3);
-        }
+        return $this->$countries[$country2);
     }
    
-    protected function _error($content) {
-        return Zend_Json::encode(array(
-                "error" => true,
-                "content" => $content
-        ));  
-    }   
-                            
-    protected function _success($content) {
-        return Zend_Json::encode(array(
-                "error" => false,
-                "content" => $content
-        )); 
-    }  
-
-
     private $countries = array("AF" => "AFG", 
                                "AD" => "AND", 
                                "AE" => "ARE",
