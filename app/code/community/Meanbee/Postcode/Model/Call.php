@@ -134,7 +134,7 @@ class Meanbee_Postcode_Model_Call {
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
         $url .= "action=lookup"
         $url .= "&type=by_street";
-        $url .= "&country=usa";
+        $url .= "&country=us";
         $url .= "&Street=" . urlencode($street);
         $url .= "&CityOrZIP=" . urlencode($postcode);
         $url .= "&account_code=" . urlencode($account_code);
