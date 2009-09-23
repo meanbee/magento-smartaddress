@@ -21,9 +21,9 @@ class Meanbee_Postcode_Model_Call {
         
         if (!empty($license) && !empty($account)) {
             try {
-                if (strcmp($country, "GB") == 0) {
+                if (strcmp($country, "GBR") == 0) {
                     $result = $this->_submitFindAddressesRequestUK($postcode, $account, $license, '');
-                } elseif (strcmp($country, "US") == 0) {
+                } elseif (strcmp($country, "USA") == 0) {
                     if (isset($street)) {
                         $result = $this->_submitFindAddressesRequestUS($street, $postcode, $account, $license, '');
                     } else {
@@ -57,9 +57,9 @@ class Meanbee_Postcode_Model_Call {
                 $result = array();
 
                 //Find addresses (different call depending on country)
-                if (strcmp($country, "GB") == 0) {
+                if (strcmp($country, "GBR") == 0) {
                     $result = $this->_submitFindSingleAddressRequestUK($id, 'english', 'simple', $account, $license, '', '');
-                } elseif (strcmp($country, "US") == 0) {
+                } elseif (strcmp($country, "USA") == 0) {
                     $result = $this->_submitFindSingleAddressRequestUS($id, $account, $license, '');
                 } else {
                     return $this->_error("Unable to find address for countries outside of UK and US");
