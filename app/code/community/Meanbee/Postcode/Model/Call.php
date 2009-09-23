@@ -131,13 +131,16 @@ class Meanbee_Postcode_Model_Call {
         //Built with help from James at http://www.omlet.co.uk/
    
         //Build US lookup URL
-        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/ByStreet?";
-        $url .= "Street=" . urlencode($street);
+        $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
+        $url .= "action=lookup"
+        $url .= "&type=by_street";
+        $url .= "&country=usa";
+        $url .= "&Street=" . urlencode($street);
         $url .= "&CityOrZIP=" . urlencode($postcode);
-        $url .= "&AccountCode=" . urlencode($account_code);
-        $url .= "&LicenseKey=" . urlencode($license_code);
-        $url .= "&MachineId=" . urlencode($machine_id);
- 
+        $url .= "&account_code=" . urlencode($account_code);
+        $url .= "&license_code=" . urlencode($license_code);
+        $url .= "&machine_id=" . urlencode($machine_id);
+        
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
          
@@ -194,11 +197,12 @@ class Meanbee_Postcode_Model_Call {
         //Built with help from James at http://www.omlet.co.uk/
         
         //Build US ID lookup URL
-        $url = "http://services.postcodeanywhere.co.uk/us/lookup.asmx/FetchAddress?";
-        $url .= "Id=" . urlencode($id);
-        $url .= "&AccountCode=" . urlencode($account_code);
-        $url .= "&LicenseKey=" . urlencode($license_code);
-        $url .= "&MachineId=" . urlencode($machine_id);
+        $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
+        $url .= "action=fetch";
+        $url .= "&id=" . urlencode($id);
+        $url .= "&account_code=" . urlencode($account_code);
+        $url .= "&license_code=" . urlencode($license_code);
+        $url .= "&machine_id=" . urlencode($machine_id);
       
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
