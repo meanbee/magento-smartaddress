@@ -30,7 +30,11 @@ class Meanbee_Postcode_Model_Call {
                         return $this->_error("No street given.");
                     }
                 } else {
-                    return $this->_error("Unable to find address");
+                    if (isset($street)) {
+                        $result = $this->_submitFindAddressesRequestWorld($street, $postcode, $country, $account, $license);
+                    } else {
+                        return $this->_error("No street given.");
+                    }
                 }
                 return $this->_success($result);
             } catch (Exception $e) {
@@ -160,6 +164,43 @@ class Meanbee_Postcode_Model_Call {
       
         //Return the result
         return $output;
+    }
+
+    /*
+     * Find addresses in the rest of the World using Streetn and Postcode
+     */
+    protected function _submitFindAddressesRequestWorld($street, $postcode, $country, $account_code, $license_code) {
+        //Built with help from James at http://www.omlet.co.uk/
+
+        //Build World lookup URL
+        $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
+        $url .= "action=international"
+        $url .= "&type=fetch_streets";
+        $url .= "&country=" . urlencode($country);
+        $url .= "&street=" . urlencode($street);
+        $url .= "&postcode=" . urlencode($postcode);
+        $url .= "&account_code=" . urlencode($account_code);
+        $url .= "&license_code=" . urlencode($license_code);
+
+        //Make the request
+        $data = simplexml_load_string(file_get_contents($url));
+
+        //Check for an error
+        if ($data->Schema['Items']==2) {
+            throw new exception ($data->Data->Item['message']);
+        }
+
+        //Create the response
+        foreach ($data->Data->children() as $row) {
+            $rowItems="";
+            foreach($row->attributes() as $key => $value) {
+                $rowItems[$key]=strval($value);
+            }
+            $output[] = $rowItems;
+        }
+   
+        //Return the result
+            return $output;
     }
 
     protected function _submitFindSingleAddressRequestUK($id, $language, $style, $account_code, $license_code, $machine_id, $options) {
