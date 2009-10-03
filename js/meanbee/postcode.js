@@ -12,7 +12,7 @@
  */
 
 function postcode_observe(a) {
-	$('meanbee:' + a + '_address_find').observe('click', function (e) {
+	$(a + 'street2').observe('onfocus', function (e) {
 		var postcode = $F(a + ':postcode');
 		var country = $F(a + ':country_id');
         var street = $F(a + ':street2');
