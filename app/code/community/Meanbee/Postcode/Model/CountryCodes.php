@@ -14,10 +14,10 @@
 class Meanbee_Postcode_Model_CountryCodes {
     
     public function covertCountryCode($country2) {
-        return $this->$countries[$country2);
+        return $this->$_countries[$country2);
     }
    
-    private $countries = array("AF" => "AFG", 
+    protected $_countries = array("AF" => "AFG", 
                                "AD" => "AND", 
                                "AE" => "ARE",
                                "AG" => "ATG",
