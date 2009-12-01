@@ -41,7 +41,7 @@ class Meanbee_Postcode_Model_Call {
                 return $this->_error($e->getMessage());
             }
         } else {
-                return $this->_error('License and/or Account keys are not set in the configuration');
+            return $this->_error('License and/or Account keys are not set in the configuration');
         }
     }
     
@@ -66,7 +66,7 @@ class Meanbee_Postcode_Model_Call {
                 } elseif (strcmp($country, "USA") == 0) {
                     $result = $this->_submitFindSingleAddressRequestUS($id, $account, $license, '');
                 } else {
-                    return $this->_error("Unable to find address for countries outside of UK and US");
+                    $result = $this->_findSingleAddressRequestWorld($id);
                 }
 
                 // Check results
@@ -112,10 +112,13 @@ class Meanbee_Postcode_Model_Call {
         
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
+        $output = array();
+        
         //Check for an error
         if ($data->Schema['Items']==2) {
             throw new exception ($data->Data->Item['message']);
         }
+
         //Create the response
         foreach ($data->Data->children() as $row) {
             $rowItems="";
@@ -124,6 +127,7 @@ class Meanbee_Postcode_Model_Call {
             }
             $output[] = $rowItems;
         }
+
         //Return the result
         return $output;
     }
@@ -136,7 +140,7 @@ class Meanbee_Postcode_Model_Call {
    
         //Build US lookup URL
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
-        $url .= "action=lookup"
+        $url .= "action=lookup";
         $url .= "&type=by_street";
         $url .= "&country=us";
         $url .= "&Street=" . urlencode($street);
@@ -147,21 +151,23 @@ class Meanbee_Postcode_Model_Call {
         
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
+        
+        $output = array();
          
         //Check for an error
-        if ($data->Schema['Items']==2) {
+        if ( $data->Schema['Items'] == 2 ) {
             throw new exception ($data->Data->Item['message']);
         }
      
         //Create the response
-        foreach ($data->Data->children() as $row) {
-            $rowItems="";
-            foreach($row->attributes() as $key => $value) {
-                $rowItems[$key]=strval($value);
+        foreach ( $data->Data->children() as $row ) {
+            $rowItems = "";
+            foreach ( $row->attributes() as $key => $value ) {
+                $rowItems[$key] = strval($value);
             }
             $output[] = $rowItems;
         }
-      
+        
         //Return the result
         return $output;
     }
@@ -174,7 +180,7 @@ class Meanbee_Postcode_Model_Call {
 
         //Build World lookup URL
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
-        $url .= "action=international"
+        $url .= "action=international";
         $url .= "&type=fetch_streets";
         $url .= "&country=" . urlencode($country);
         $url .= "&street=" . urlencode($street);
@@ -184,6 +190,7 @@ class Meanbee_Postcode_Model_Call {
 
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
+        $output = array();
 
         //Check for an error
         if ($data->Schema['Items']==2) {
@@ -192,10 +199,13 @@ class Meanbee_Postcode_Model_Call {
 
         //Create the response
         foreach ($data->Data->children() as $row) {
-            $rowItems="";
+            $rowItems ="";
+            $id_value = "";
             foreach($row->attributes() as $key => $value) {
-                $rowItems[$key]=strval($value);
+                $rowItems['description'] .=strval($value) . ", ";
+                $id_value .= $key . '=' . strval($value) . '#';
             }
+            $rowItems['id'] = strval($id_value);
             $output[] = $rowItems;
         }
    
@@ -216,12 +226,17 @@ class Meanbee_Postcode_Model_Call {
         $url .= "&license_code=" . urlencode($license_code);
         $url .= "&machine_id=" . urlencode($machine_id);
         $url .= "&options=" . urlencode($options);
+        
         //Make the request
+        
         $data = simplexml_load_string(file_get_contents($url));
+        $output = array();
+
         //Check for an error
         if ($data->Schema['Items']==2) {
                  throw new exception ($data->Data->Item['message']);
         }
+
         //Create the response
         foreach ($data->Data->children() as $row) {
             $rowItems="";
@@ -230,6 +245,7 @@ class Meanbee_Postcode_Model_Call {
             }
             $output[] = $rowItems;
         }
+
         //Return the result
         return $output;
     }
@@ -247,7 +263,8 @@ class Meanbee_Postcode_Model_Call {
       
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
-      
+        $output = array();
+
         //Check for an error
         if ($data->Schema['Items']==2) {
             throw new exception ($data->Data->Item['message']);
@@ -263,6 +280,21 @@ class Meanbee_Postcode_Model_Call {
         }
         
         //Return the result
+        return $output;
+    }
+
+    protected function _findSingleAddressRequestWorld($id) {
+        // Split on # to give each field back
+        $rows = explode('#', $id);
+        $rowItems = "";
+        foreach($rows as $row) {
+            // Then split on = to find key and value
+            $items = explode('='. $row);
+            $rowItems[$items[0]] = $items[1];
+        }
+        $output[]  = $rowItems;
+        
+        // Return the result.
         return $output;
     }
 }

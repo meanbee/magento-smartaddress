@@ -49,6 +49,13 @@
 										</div>
 								</li>
 								<li id="meanbee:billing_address_selector">&nbsp;</li>
+                <li>
+                    <div class="input-box">
+                        <input type="text" title="Start typing street" id="meanbee:billing_autocomplete" name="autocomplete_parameter"  width="400" />                            <span id="indicator" style="display: none">
+                                  Working...
+                            </span>   
+                         <div id="autocomplete_choices" class="autocomplete"></div>
+                    </div></li>
                 <li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress())
                     ->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?></li>
                 <li>

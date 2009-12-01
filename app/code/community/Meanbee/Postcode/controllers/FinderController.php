@@ -50,7 +50,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
         $street = isset($_GET['street']) ? $_GET['street'] : '';
         $country = $_GET['country'];
 
-        // Aslong as have data we need, call actions
+        // As long as have data we need, call actions
         if (!empty($postcode)) {
             if (!empty($country)) {
                 $call = Mage::getModel('postcode/call');
@@ -110,5 +110,40 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
                 "content" => "No address ID provided"
             ));
         }
+    }
+
+    public function autocompleteAction() {
+        //Retrieve fields
+        $postcode = strtolower(preg_replace("/[^a-zA-Z0-9]/", "", str_replace(' ', '', $_POST['postcode'])));
+        $street = isset($_POST['street']) ? $_POST['street'] : ''; 
+        $country = $_POST['country'];
+
+        // Aslong as have data we need, call actions
+        if (!empty($postcode)) {
+            if (!empty($country)) {
+                $call = Mage::getModel('postcode/call');
+                $countryCodes = Mage::getSingleton('postcode/countrycodes');
+                $country = $countryCodes->convertCountryCode($country);
+                if (is_null($country)) {
+                    alert('Invalid Country provided'); 
+                } else {
+                    $jResult =  $call->findMultipleByPostcode($postcode, $street, $country);
+                    $result = json_decode($jResult, true);
+                    echo "<ul>";
+                    if ( $result['error'] == true ) {
+                        echo "<li>Webmaster: " . $result['content'] . "</li>";
+                    } else {
+                        for ($i = 0; $i < count( $result['content'] ); $i++) {
+                            echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";
+                        }
+                    }
+                    echo "</ul>";
+                }   
+            } else {
+                echo "<ul><li>No country provided</li></ul>";
+            }   
+        } else {
+            echo "<ul><li>No postcode provided</li</ul>";
+        }   
     }
 }

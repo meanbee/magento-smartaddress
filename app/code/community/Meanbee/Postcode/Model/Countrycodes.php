@@ -11,10 +11,14 @@
  * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
-class Meanbee_Postcode_Model_CountryCodes {
+class Meanbee_Postcode_Model_Countrycodes {
     
-    public function covertCountryCode($country2) {
-        return $this->$_countries[$country2);
+    public function convertCountryCode($country2) {
+        if ( isset( $this->_countries[$country2] ) ) {
+            return $this->_countries[$country2];
+        } else {
+            return null;
+        }
     }
    
     protected $_countries = array("AF" => "AFG", 
@@ -36,7 +40,7 @@ class Meanbee_Postcode_Model_CountryCodes {
                                "AZ" => "AZE",
                                "BA" => "BIH",
                                "BB" => "BRB", 
-                               "BD" => "BGD",. 
+                               "BD" => "BGD", 
                                "BE" => "BEL", 
                                "BF" => "BFA", 
                                "BG" => "BGR",

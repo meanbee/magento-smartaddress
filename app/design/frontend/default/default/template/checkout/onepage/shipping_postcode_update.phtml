@@ -48,7 +48,15 @@
                         </div>
                     </li>
                     <li id="meanbee:shipping_address_selector">&nbsp;</li>
-                    <li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress())
+                    <li>
+                      <div class="input-box">
+                          <input type="text" title="Start typing street" id="meanbee:shipping_autocomplete" name="autocomplete_parameter"  width="400" />
+                              <span id="indicator" style="display: none">
+                                    Working...
+                             </span>
+                          <div id="autocomplete_choices" class="autocomplete"></div>
+                          </div></li>
+                     <li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress())
                             ->setFieldIdFormat('shipping:%s')->setFieldNameFormat('shipping[%s]')->setFieldParams('onchange="shipping.setSameAsBilling(false)"')->toHtml() ?></li>
                     <li>
                         <div class="input-box">

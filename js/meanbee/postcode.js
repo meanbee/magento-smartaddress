@@ -11,24 +11,42 @@
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
 
-function postcode_observe(a) {
-	$(a + 'street2').observe('onfocus', function (e) {
-		var postcode = $F(a + ':postcode');
-		var country = $F(a + ':country_id');
-        var street = $F(a + ':street2');
-        if (postcode != '' && country != '') {
-			$('meanbee:' + a + '_address_selector').innerHTML = "Loading..";
-			postcode_fetchOptions(postcode, street, country, a);
-		}
-	});
+function getCountryAndPostcodeBilling(element, entry) {
+    return entry + '&country=' + $F('billing:country_id') 
+                + '&postcode=' + $F('billing:postcode');
 }
 
-function postcode_fetchOptions(p, s, c, a) {
+function getCountryAndPostcodeShipping(element, entry) {
+    return entry + '&country=' + $F('shipping:country_id')
+                + '&postcode=' + $F('shipping:postcode');
+}
+
+function postcode_observe(a) {
+    $(a + ':country_id').observe('change', function (e) {
+        var country = $F(a + ':country_id');
+        if (country == 'GB') {
+            $('meanbee:' + a + '_address_find').show();
+            $('meanbee:' + a + '_autocomplete').hide();
+        } else {
+            $('meanbee:' + a + '_address_find').hide();
+            $('meanbee:' + a + '_autocomplete').show();
+        }
+    });
+
+    $('meanbee:' + a + '_address_find').observe('click', function (e) { 
+        var postcode = $F(a + ':postcode');
+        if (postcode != '') { 
+            $('meanbee:' + a + '_address_selector').innerHTML = "Loading..."; 
+            postcode_fetchOptionsUK(postcode, a); 
+        } 
+    }); 
+}
+
+function postcode_fetchOptionsUK(p, a) {
 	new Ajax.Request(BASE_URL + 'postcode/finder/multiple/', {
 		method: 'get',
 		parameters: 'postcode=' + p
-                    + '&street=' + s
-                    + '&country=' + c,
+                    + '&country=GB',
 		onSuccess: function(t) {
 			var j = t.responseJSON;
 
@@ -109,6 +127,10 @@ function postcode_fillFields(id, country, a) {
 	});
 }
 
+function postcode_fillFieldsWorld(text, li) {
+    
+
+}
 
 function postcode_error(m, a) {
 	$('meanbee:' + a + '_address_selector').innerHTML = '&nbsp;';

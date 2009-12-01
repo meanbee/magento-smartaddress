@@ -3,6 +3,7 @@
 	<checkout_onepage_index>
 		<reference name="head">
 			<action method="addJs"><script>meanbee/postcode.js</script></action>
-		</reference>
+            <action method="addCss"><stylesheet>css/meanbee/autocomplete.css</stylesheet></action>
+        </reference>
 	</checkout_onepage_index>
 </layout>
