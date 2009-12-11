@@ -11,6 +11,12 @@
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
 
+var street_id;
+
+function getStreet(element, entry) {
+    return entry + "&street_id=" + street_id;
+} 
+
 function getCountryAndPostcodeBilling(element, entry) {
     return entry + '&country=' + $F('billing:country_id') 
                 + '&postcode=' + $F('billing:postcode');
@@ -65,6 +71,40 @@ function postcode_fetchOptionsUK(p, a) {
 	});
 }
 
+function postcode_autocomplete_selected(text,li) {
+    var formName;
+    var country;
+   
+    if (text.id == 'meanbee:billing_autocomplete') {
+        formName = 'billing';
+        country =  $F('billing:country_id');
+    } else if (text.id == 'meanbee:shipping_autocomplete') {
+        formName = 'shipping';
+        country = $F('shipping:country_id');
+    }   
+    
+    if ( country == 'US' ) { 
+        street_id = li.id;
+    } else {
+        postcode_fillFieldsWorld(li.id, country, formName);
+    }   
+}
+
+function postcode_autocomplete_building(text,li) {
+    var formName;
+    var country;
+   
+    if (text.id == 'meanbee:billing_autocomplete_building') {
+        formName = 'billing';
+        country =  $F('billing:country_id');
+    } else if (text.id == 'meanbee:shipping_autocomplete_building') {
+        formName = 'shipping';
+        country = $F('shipping:country_id');
+    }   
+
+    postcode_fillFieldsUS(li.id, country, formName);
+}
+
 function postcode_fillFields(id, country, a) {				
 	new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
 		method: 'get',
@@ -74,31 +114,26 @@ function postcode_fillFields(id, country, a) {
 			var j = t.responseJSON;
 			
 			if (!j.error) {
-				if (typeof(j.content.country) != "undefined") {
-                    $(a + ':country_id').value = j.content.country;
-				} else {
-                    $(a + ':country_id').value = 'GB';
-                }
+                var lines = new Array(j.content.line1, j.content.line2, j.content.line3, j.content.line4);
+                var concat_line = null;
+
+                $(a + ':country_id').value = 'GB';
                 eval(a + 'RegionUpdater.update();');
 
-				if (typeof(j.content.line1) != "undefined") {
-					$(a + ':street1').value = j.content.line1;
-				} else {
-					$(a + ':street1').value = '';
-				}
-				
-				if (typeof(j.content.line2) != "undefined") {
-					$(a + ':street2').value = j.content.line2;
-				} else {
-					$(a + ':street2').value = '';
-				}
-				
-				if (typeof(j.content.line3) != "undefined" && $(a + ':street3') != null) {
-					$(a + ':street3').value = j.content.line3;
-				} else if($(a + ':street3') != null) {
-					$(a + ':street3').value = '';
-				}
-				
+                for (var i =0; i < 4; i++) {
+                    if (typeof(lines[i]) != "undefined" &&  $(a + ':street' + (i+1)) != null) {
+                        $(a + ':street' + (i+1)).value = lines[i];
+                    } else if ($(a + ':street' + (i+1)) != null) {
+                        $(a + ':street' + (i+1)).value = '';
+                    } else if (typeof(lines[i]) != "undefined") {
+                        if (concat_line == null) {
+                            concat_line = i - 1;
+                        }
+
+                        $(a + ':street' + (concat_line+1)).value += ', ' + lines[i];
+                    }
+                }		
+
 				if (typeof(j.content.organisation_name) != "undefined") {
 					$(a + ':company').value = j.content.organisation_name;
 				} else {
@@ -127,9 +162,107 @@ function postcode_fillFields(id, country, a) {
 	});
 }
 
-function postcode_fillFieldsWorld(text, li) {
-    
+function postcode_fillFieldsUS(id, country, a) {
+new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
+        method: 'get',
+        parameters: 'id=' + id +
+                    '&country=' + country,
+        onSuccess: function(t) {
+            var j = t.responseJSON;
+            
+            if (!j.error) {
+                var lines = new Array(j.content.line1, j.content.line2);
+                var concat_line = null;
 
+                $(a + ':country_id').value = 'US';
+                eval(a + 'RegionUpdater.update();');
+
+                for (var i =0; i < 2; i++) {
+                    if (typeof(lines[i]) != "undefined" &&  $(a + ':street' + (i+1)) != null) {
+                        $(a + ':street' + (i+1)).value = lines[i];
+                    } else if ($(a + ':street' + (i+1)) != null) {
+                        $(a + ':street' + (i+1)).value = '';
+                    } else if (typeof(lines[i]) != "undefined") {
+                        if (concat_line == null) {
+                            concat_line = i - 1;
+                        }
+
+                        $(a + ':street' + (concat_line+1)).value += ', ' + lines[i];
+                    }
+                }       
+
+                if (typeof(j.content.organisation_name) != "undefined") {
+                    $(a + ':company').value = j.content.organisation_name;
+                } else {
+                    $(a + ':company').value = '';
+                }
+                
+                if (typeof(j.content.city) != "undefined") {
+                    $(a + ':city').value = j.content.city;
+                } else {
+                    $(a + ':city').value = '';
+                }
+                
+                if (typeof(j.content.state) != "undefined") {
+                    $(a + ':region').value = j.content.state;
+                } else {
+                    $(a + ':region').value = '';
+                }
+                
+                $(a + ':postcode').value = j.content.zip;
+
+            } else {
+                alert(j.content);
+            }
+        }
+    });
+}
+
+function postcode_fillFieldsWorld(id, country, a) {
+new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
+        method: 'get',
+        parameters: 'id=' + id +
+                    '&country=' + country,
+        onSuccess: function(t) {
+            var j = t.responseJSON;
+            
+            if (!j.error) {
+                var lines = new Array(j.content.street, j.content.district);
+                var concat_line = null;
+
+                for (var i =0; i < 2; i++) {
+                    if (typeof(lines[i]) != "undefined" &&  $(a + ':street' + (i+2)) != null) {
+                        $(a + ':street' + (i+2)).value = lines[i];
+                    } else if ($(a + ':street' + (i+1)) != null) {
+                        $(a + ':street' + (i+2)).value = '';
+                    } else if (typeof(lines[i]) != "undefined") {
+                        if (concat_line == null) {
+                            concat_line = i;
+                        }
+
+                        $(a + ':street' + (concat_line+1)).value += ', ' + lines[i];
+                    }
+                }       
+
+                if (typeof(j.content.city) != "undefined") {
+                    $(a + ':city').value = j.content.city;
+                } else {
+                    $(a + ':city').value = '';
+                }
+                
+                if (typeof(j.content.state) != "undefined") {
+                    $(a + ':region').value = j.content.state;
+                } else {
+                    $(a + ':region').value = '';
+                }
+                
+                $(a + ':postcode').value = j.content.postcode;
+
+            } else {
+                alert(j.content);
+            }
+        }
+    });
 }
 
 function postcode_error(m, a) {

@@ -146,4 +146,30 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
             echo "<ul><li>No postcode provided</li</ul>";
         }   
     }
+
+    public function autocomplete_buildingAction() {
+        //Retrieve fields
+        $street_id = $_POST['street_id'];
+        $building = $_POST['building'];
+
+        // Aslong as have data we need, call actions
+        if (!empty($street_id)) {
+            $call = Mage::getModel('postcode/call');
+            $jResult =  $call->findBuildingByStreet($street_id, $building);
+            $result = json_decode($jResult, true);
+            echo "<ul>";
+            if ( $result['error'] == true ) {        
+                echo "<li>Webmaster: " . $result['content'] . "</li>";
+            } else {
+                for ($i = 0; $i < count( $result['content'] ); $i++) {
+                    echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";
+                }
+            }
+            echo "</ul>";
+        } else {
+            echo "<ul></ul>";
+        }
+    } 
+
 }
+?>

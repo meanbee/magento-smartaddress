@@ -14,7 +14,7 @@
         indicator: 'indicator',
         paramName: 'street',
         callback: getCountryAndPostcodeBilling,
-        afterUpdateElement: postcode_fillFieldsWorld
+        afterUpdateElement: postcode_autocomplete_selected
     });
 
     new Ajax.Autocompleter("meanbee:shipping_autocomplete", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete", {
@@ -22,8 +22,24 @@
         indicator: 'indicator',
         paramName: 'street',
         callback: getCountryAndPostcodeShipping,
-        afterUpdateElement: postcode_fillFieldsWorld
+        afterUpdateElement: postcode_autocomplete_selected
     });	
+
+    new Ajax.Autocompleter("meanbee:billing_autocomplete_building", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete_building", {
+        minChars: 1,  
+        indicator: 'indicator',
+        paramName: 'building',
+        callback: getStreet,
+        afterUpdateElement: postcode_autocomplete_building
+    });
+
+    new Ajax.Autocompleter("meanbee:shipping_autocomplete_building", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete_building", {
+        minChars: 1,
+        indicator: 'indicator',
+        paramName: 'building',
+        callback: getStreet,
+        afterUpdateElement: postcode_autocomplete_building
+    });   
 
     /* Activate the listeners */
 	postcode_observe('billing');
