@@ -42,6 +42,10 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
         }
     }
     
+    public function postDispatch() {
+        return 0;
+    }
+
     public function multipleAction() {
         header("Content-type: application/json");
         
@@ -137,7 +141,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
                             echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";
                         }
                     }
-                    echo "</ul>";
+                    echo "</ul>"; //exit;
                 }   
             } else {
                 echo "<ul><li>No country provided</li></ul>";
@@ -158,7 +162,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
             $jResult =  $call->findBuildingByStreet($street_id, $building);
             $result = json_decode($jResult, true);
             echo "<ul>";
-            if ( $result['error'] == true ) {        
+            if ( $result['error'] == true ) { 
                 echo "<li>Webmaster: " . $result['content'] . "</li>";
             } else {
                 for ($i = 0; $i < count( $result['content'] ); $i++) {
@@ -169,7 +173,6 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
         } else {
             echo "<ul></ul>";
         }
-    } 
-
+    }  
 }
 ?>
