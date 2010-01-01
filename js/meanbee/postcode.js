@@ -32,10 +32,19 @@ function postcode_observe(a) {
         var country = $F(a + ':country_id');
         if (country == 'GB') {
             $('meanbee:' + a + '_address_find').show();
+            $('meanbee:' + a + '_address_selector').show();
             $('meanbee:' + a + '_autocomplete').hide();
+            $('meanbee:' + a + '_autocomplete_building').hide();
+        } else if (country == 'US') {
+            $('meanbee:' + a + '_address_find').hide();
+            $('meanbee:' + a + '_address_selector').hide();
+            $('meanbee:' + a + '_autocomplete').show();
+            $('meanbee:' + a + '_autocomplete_building').show();
         } else {
             $('meanbee:' + a + '_address_find').hide();
+            $('meanbee:' + a + '_address_selector').hide();
             $('meanbee:' + a + '_autocomplete').show();
+            $('meanbee:' + a + '_autocomplete_building').hide();
         }
     });
 
@@ -225,24 +234,23 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                     '&country=' + country,
         onSuccess: function(t) {
             var j = t.responseJSON;
-            
             if (!j.error) {
                 var lines = new Array(j.content.street, j.content.district);
                 var concat_line = null;
-
+                
                 for (var i =0; i < 2; i++) {
                     if (typeof(lines[i]) != "undefined" &&  $(a + ':street' + (i+2)) != null) {
                         $(a + ':street' + (i+2)).value = lines[i];
-                    } else if ($(a + ':street' + (i+1)) != null) {
-                        $(a + ':street' + (i+2)).value = '';
+                    } else if ($(a + ':street' + (i+2)) != null) {
+                        $(a + ':street' + (i+2)).value = ''; 
                     } else if (typeof(lines[i]) != "undefined") {
                         if (concat_line == null) {
-                            concat_line = i;
+                            concat_line = i - 1;
                         }
 
-                        $(a + ':street' + (concat_line+1)).value += ', ' + lines[i];
+                        $(a + ':street' + (concat_line+2)).value += ', ' + lines[i];
                     }
-                }       
+                } 
 
                 if (typeof(j.content.city) != "undefined") {
                     $(a + ':city').value = j.content.city;

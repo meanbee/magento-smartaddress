@@ -88,8 +88,12 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
 
         if (isset($_GET['id'])) {
             if (isset($_GET['country'])) {
-                $id = (int) $_GET['id'];
                 $country = $_GET['country'];
+                if (strcmp($country, "GBR") == 0 || strcmp($country, "USA") == 0) {
+                    $id = (int) $_GET['id'];
+                } else {
+                    $id = $_GET['id'];
+                }
                 $countryCodes = Mage::getSingleton('postcode/countrycodes');
                 $country = $countryCodes->convertCountryCode($country);
                 if (is_null($country)) {
@@ -166,7 +170,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
                 echo "<li>Webmaster: " . $result['content'] . "</li>";
             } else {
                 for ($i = 0; $i < count( $result['content'] ); $i++) {
-                    echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";
+                    echo "<li id=" . substr($result['content'][$i]['id'],1) . ">" . $result['content'][$i]['description'] . "</li>";
                 }
             }
             echo "</ul>";

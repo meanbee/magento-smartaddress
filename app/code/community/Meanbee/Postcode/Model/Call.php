@@ -55,8 +55,9 @@ class Meanbee_Postcode_Model_Call {
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
         
         if (!empty($license) && !empty($account)) {
-            $id = (int) $id;
-            
+            if (strcmp($country,"GBR") == 0 || strcmp($country,"USA") == 0) {
+                $id = (int) $id;
+            }
             try {
                 $result = array();
 
@@ -66,7 +67,7 @@ class Meanbee_Postcode_Model_Call {
                 } elseif (strcmp($country, "USA") == 0) {
                     $result = $this->_submitFindSingleAddressRequestUS($id, $account, $license, '');
                 } else {
-                    $result = $this->_findSingleAddressRequestWorld($id);
+                    $result = $this->_findSingleAddressRequestWorld(urldecode("$id"));
                 }
 
                 // Check results
@@ -86,7 +87,7 @@ class Meanbee_Postcode_Model_Call {
     public function findBuildingByStreet($street_id, $building) {
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
-
+    
         if (!empty($license) && !empty($account)) {
             $street_id = (int) $street_id;
             
@@ -108,7 +109,7 @@ class Meanbee_Postcode_Model_Call {
                 return $this->_error('License and/or Account keys are not set in the configuration');
         }
     }
-
+ 
     protected function _error($content) {
         return Zend_Json::encode(array(
                 "error" => true,
@@ -226,12 +227,15 @@ class Meanbee_Postcode_Model_Call {
         //Create the response
         foreach ($data->Data->children() as $row) {
             $rowItems ="";
-            $id_value = "";
+            $rowItems['description'] = "";
+            $id_value = "'";
             foreach($row->attributes() as $key => $value) {
-                $rowItems['description'] .=strval($value) . ", ";
-                $id_value .= $key . '=' . strval($value) . '#';
+                $rowItems['description'] .= strval($value) . ", ";
+                $id_value .= $key . '=' . strval($value) . '{}';
             }
+            $id_value = substr($id_value,0,strlen($id_value)-2) . "'";
             $rowItems['id'] = strval($id_value);
+          
             $output[] = $rowItems;
         }
    
@@ -282,11 +286,13 @@ class Meanbee_Postcode_Model_Call {
         //Build US ID lookup URL
         $url = "http://services.postcodeanywhere.co.uk/xml.aspx?";
         $url .= "action=fetch";
-        $url .= "&id=" . urlencode($id);
+        $url .= "&country=us";
+        $url .= "&style=simple";
+        $url .= "&id=$" . $id;
         $url .= "&account_code=" . urlencode($account_code);
         $url .= "&license_code=" . urlencode($license_code);
         $url .= "&machine_id=" . urlencode($machine_id);
-      
+     
         //Make the request
         $data = simplexml_load_string(file_get_contents($url));
         $output = array();
@@ -334,21 +340,23 @@ class Meanbee_Postcode_Model_Call {
             foreach($row->attributes() as $key => $value) {
                 $rowItems[$key]=strval($value);
             }
-            $output[] = $rowItems;
+            if (preg_match("/^$building.+$/", $rowItems['description'])) {
+                $output[] = $rowItems;
+            }
         }
-
+        
         //Return the result
         return $output;
 
     }
 
     protected function _findSingleAddressRequestWorld($id) {
-        // Split on # to give each field back
-        $rows = explode('#', $id);
+        // Split on {} to give each field back
+        $rows = explode('{}', $id);
         $rowItems = "";
         foreach($rows as $row) {
             // Then split on = to find key and value
-            $items = explode('='. $row);
+            $items = explode('=', $row);
             $rowItems[$items[0]] = $items[1];
         }
         $output[]  = $rowItems;

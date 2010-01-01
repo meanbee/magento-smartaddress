@@ -1,48 +1,50 @@
 <script type="text/javascript">
 //<![CDATA[
-    /* Set default country (Optional) */
-    $('billing:country_id').value = 'GB';
-    billingRegionUpdater.update();
-		
-    $('shipping:country_id').value = 'GB';
-    shippingRegionUpdater.update();
 		
     var BASE_URL = '<?php echo $this->getUrl()?>';
 	
-    new Ajax.Autocompleter("meanbee:billing_autocomplete", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete", {
+    new Ajax.Autocompleter("meanbee:billing_autocomplete", "autocomplete_choices_billing_street", BASE_URL + "postcode/finder/autocomplete", {
         minChars: 2,  
-        indicator: 'indicator',
+        indicator: 'indicator_billing_street',
         paramName: 'street',
         callback: getCountryAndPostcodeBilling,
         afterUpdateElement: postcode_autocomplete_selected
     });
 
-    new Ajax.Autocompleter("meanbee:shipping_autocomplete", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete", {
+    new Ajax.Autocompleter("meanbee:shipping_autocomplete", "autocomplete_choices_shipping_street", BASE_URL + "postcode/finder/autocomplete", {
         minChars: 2,
-        indicator: 'indicator',
+        indicator: 'indicator_shipping_street',
         paramName: 'street',
         callback: getCountryAndPostcodeShipping,
         afterUpdateElement: postcode_autocomplete_selected
-    });	
-
-    new Ajax.Autocompleter("meanbee:billing_autocomplete_building", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete_building", {
-        minChars: 1,  
-        indicator: 'indicator',
+    }); 
+    
+    new Ajax.Autocompleter("meanbee:billing_autocomplete_building", "autocomplete_choices_billing_building", BASE_URL + "postcode/finder/autocomplete_building", {
+        minChars: 2,  
+        indicator: 'indicator_billing_building',
         paramName: 'building',
         callback: getStreet,
         afterUpdateElement: postcode_autocomplete_building
     });
 
-    new Ajax.Autocompleter("meanbee:shipping_autocomplete_building", "autocomplete_choices", BASE_URL + "postcode/finder/autocomplete_building", {
-        minChars: 1,
-        indicator: 'indicator',
+    new Ajax.Autocompleter("meanbee:shipping_autocomplete_building", "autocomplete_choices_shipping_building", BASE_URL + "postcode/finder/autocomplete_building", {
+        minChars: 2,
+        indicator: 'indicator_shipping_building',
         paramName: 'building',
         callback: getStreet,
         afterUpdateElement: postcode_autocomplete_building
-    });   
-
+    });      
+    
     /* Activate the listeners */
-	postcode_observe('billing');
-	postcode_observe('shipping');
+    postcode_observe('billing');
+    postcode_observe('shipping');
+
+    /* Set default country (Optional) */
+    $('billing:country_id').value = 'GB';
+    billingRegionUpdater.update();
+ 
+    $('shipping:country_id').value = 'GB';
+    shippingRegionUpdater.update();
+
 //]]>
 </script>

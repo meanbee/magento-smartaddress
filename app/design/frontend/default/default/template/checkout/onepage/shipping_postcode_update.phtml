@@ -50,20 +50,21 @@
                     <li id="meanbee:shipping_address_selector">&nbsp;</li>
                     <li>
                       <div class="input-box">
-                          <input type="text" title="Start typing street" id="meanbee:shipping_autocomplete" name="autocomplete_parameter"  width="400" />
-                              <span id="indicator" style="display: none">
-                                    Working...
+                          <input type="text" title="Start typing street" id="meanbee:shipping_autocomplete" name="autocomplete_parameter"  width="400" class="input-text" />
+                              <span id="indicator_shipping_street" style="display: none">
+                                   <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
                              </span>
-                          <div id="autocomplete_choices" class="autocomplete"></div>
-                          </div></li>
+                          <div id="autocomplete_choices_shipping_street" class="autocomplete"></div>
+                          </div></li>                      
                 <li>
                     <div class="input-box">
-                        <input type="text" title="Start typing building" id="meanbee:shipping_autocomplete_building" name="autocomplete_parameter"  width="400" />                            <span id="indicator" style="display: none">
-                                  Working...
+                        <input type="text" title="Start typing building" id="meanbee:shipping_autocomplete_building" name="autocomplete_parameter"  width="400" class="input-text"/>
+                            <span id="indicator_shipping_street" style="display: none">
+                                   <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
                             </span>   
-                         <div id="autocomplete_choices" class="autocomplete"></div>
-                        </div></li>
-                     <li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress())
+                         <div id="autocomplete_choices_shipping_building" class="autocomplete"></div>
+                        </div></li>                    
+                    <li><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress())
                             ->setFieldIdFormat('shipping:%s')->setFieldNameFormat('shipping[%s]')->setFieldParams('onchange="shipping.setSameAsBilling(false)"')->toHtml() ?></li>
                     <li>
                         <div class="input-box">
