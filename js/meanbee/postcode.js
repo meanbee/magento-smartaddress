@@ -238,6 +238,7 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                     '&country=' + country,
         onSuccess: function(t) {
             var j = t.responseJSON;
+
             if (!j.error) {
                 var lines = new Array(j.content.street, j.content.district);
                 var concat_line = null;
@@ -263,7 +264,15 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                 }
                 
                 if (typeof(j.content.state) != "undefined") {
-                    $(a + ':region').value = j.content.state;
+                    for (country in countryRegions) {
+                        if (country == j.content.country) {
+                            for (region in countryRegions[country]) {
+                                if (countryRegions[country][region].code == j.content.state) {
+                                    $(a + ':region').value = region;
+                                }
+                            }
+                        }
+                    }
                 } else {
                     $(a + ':region').value = '';
                 }
