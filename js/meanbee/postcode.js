@@ -58,26 +58,26 @@ function postcode_observe(a) {
 }
 
 function postcode_fetchOptionsUK(p, a) {
-	new Ajax.Request(BASE_URL + 'postcode/finder/multiple/', {
-		method: 'get',
-		parameters: 'postcode=' + p
+    new Ajax.Request(BASE_URL + 'postcode/finder/multiple/', {
+        method: 'get',
+        parameters: 'postcode=' + p
                     + '&country=GB',
-		onSuccess: function(t) {
-			var j = t.responseJSON;
+        onSuccess: function(t) {
+            var j = t.responseJSON;
 
-			if (!j.error) {
-				var c = '<select id="meanbee:' + a + '_address_selector_select">';
-				for(var i = 0; i < j.content.length; i++) {
-					c += '<option value="' + j.content[i].id + '">' + j.content[i].description + '</option>'
-				}
-				c+= '</select>';
-				$('meanbee:' + a + '_address_selector').innerHTML = c + ' <button onclick="postcode_fillFields($F(\'meanbee:' + a + '_address_selector_select\'), $F(\'' + a + ':country_id\'), \'' + a + '\' )" type="button">Select Address</button>';
-				//$('meanbee:' + a + '_address_selector').innerHTML += '<br /><small><b>Note:</b> Please select your address from the above drop down menu before pressing "Select Address".</small>';
-			} else {
-				postcode_error(j.content, a);
-			}
-		}
-	});
+            if (!j.error) {
+                var c = '<select id="meanbee:' + a + '_address_selector_select">';
+                for(var i = 0; i < j.content.length; i++) {
+                    c += '<option value="' + j.content[i].id + '">' + j.content[i].description + '</option>'
+                }
+                c+= '</select>';
+                $('meanbee:' + a + '_address_selector').innerHTML = c + ' <button onclick="postcode_fillFields($F(\'meanbee:' + a + '_address_selector_select\'), $F(\'' + a + ':country_id\'), \'' + a + '\' )" type="button">Select Address</button>';
+                //$('meanbee:' + a + '_address_selector').innerHTML += '<br /><small><b>Note:</b> Please select your address from the above drop down menu before pressing "Select Address".</small>';
+            } else {
+                postcode_error(j.content, a);
+            }
+        }
+    });
 }
 
 function postcode_autocomplete_selected(text,li) {
@@ -114,22 +114,22 @@ function postcode_autocomplete_building(text,li) {
     postcode_fillFieldsUS(li.id, country, formName);
 }
 
-function postcode_fillFields(id, country, a) {				
-	new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
-		method: 'get',
-		parameters: 'id=' + id +
+function postcode_fillFields(id, country, a) {                
+    new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
+        method: 'get',
+        parameters: 'id=' + id +
                     '&country=' + country,
-		onSuccess: function(t) {
-			var j = t.responseJSON;
-			
-			if (!j.error) {
-                var lines = new Array(j.content.line1, j.content.line2, j.content.line3, j.content.line4);
+        onSuccess: function(t) {
+            var j = t.responseJSON;
+            
+            if (!j.error) {
+                var lines = new Array(j.content.line1, j.content.line2, j.content.line3, j.content.line4, j.content.line5);
                 var concat_line = null;
 
                 $(a + ':country_id').value = 'GB';
                 eval(a + 'RegionUpdater.update();');
 
-                for (var i =0; i < 4; i++) {
+                for (var i = 0; i < 5; i++) {
                     if (typeof(lines[i]) != "undefined" &&  $(a + ':street' + (i+1)) != null) {
                         $(a + ':street' + (i+1)).value = lines[i];
                     } else if ($(a + ':street' + (i+1)) != null) {
@@ -141,34 +141,34 @@ function postcode_fillFields(id, country, a) {
 
                         $(a + ':street' + (concat_line+1)).value += ', ' + lines[i];
                     }
-                }		
+                }        
 
-				if (typeof(j.content.organisation_name) != "undefined") {
-					$(a + ':company').value = j.content.organisation_name;
-				} else {
-					$(a + ':company').value = '';
-				}
-				
-				if (typeof(j.content.post_town) != "undefined") {
-					$(a + ':city').value = j.content.post_town;
-				} else {
-					$(a + ':city').value = '';
-				}
-				
-				if (typeof(j.content.county) != "undefined") {
-					$(a + ':region').value = j.content.county;
-				} else {
-					$(a + ':region').value = '';
-				}
-				
-				$(a + ':postcode').value = j.content.postcode;
+                if (typeof(j.content.organisation_name) != "undefined") {
+                    $(a + ':company').value = j.content.organisation_name;
+                } else {
+                    $(a + ':company').value = '';
+                }
+                
+                if (typeof(j.content.post_town) != "undefined") {
+                    $(a + ':city').value = j.content.post_town;
+                } else {
+                    $(a + ':city').value = '';
+                }
+                
+                if (typeof(j.content.county) != "undefined") {
+                    $(a + ':region').value = j.content.county;
+                } else {
+                    $(a + ':region').value = '';
+                }
+                
+                $(a + ':postcode').value = j.content.postcode;
 
-				$('meanbee:' + a + '_address_selector').innerHTML = '&nbsp;';
-			} else {
-				postcode_error(j.content, a);
-			}
-		}
-	});
+                $('meanbee:' + a + '_address_selector').innerHTML = '&nbsp;';
+            } else {
+                postcode_error(j.content, a);
+            }
+        }
+    });
 }
 
 function postcode_fillFieldsUS(id, country, a) {
@@ -213,7 +213,11 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                 }
                 
                 if (typeof(j.content.state) != "undefined") {
-                    $(a + ':region').value = j.content.state;
+                    for (region in countryRegions['US']) {
+                        if (countryRegions[country][region].code == j.content.state) {
+                            $(a + ':region').value = region;
+                        }
+                    }
                 } else {
                     $(a + ':region').value = '';
                 }
@@ -274,6 +278,6 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
 }
 
 function postcode_error(m, a) {
-	$('meanbee:' + a + '_address_selector').innerHTML = '&nbsp;';
-	alert(m);
+    $('meanbee:' + a + '_address_selector').innerHTML = '&nbsp;';
+    alert(m);
 }
