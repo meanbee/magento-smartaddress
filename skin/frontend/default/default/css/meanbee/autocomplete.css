@@ -25,3 +25,12 @@ div.autocomplete ul li {
     height:32px;
     cursor:pointer;
 }
+
+#indicator_billing_street, #indicator_shipping_street, #indicator_billing_building, #indicator_shipping_building {
+    float:right;
+    padding-left:10px;
+}
+
+.input-box-wide {
+    width: auto !important;
+}
