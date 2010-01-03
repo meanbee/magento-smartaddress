@@ -30,8 +30,6 @@ function getCountryAndPostcodeShipping(element, entry) {
 function showCorrectTextBoxes(a) {
     var country = $F(a + ':country_id');
 
-    console.log(country);
-
     if (country == 'GB') {
         $('meanbee:' + a + '_address_find').show();
         $('meanbee:' + a + '_address_selector').show();
