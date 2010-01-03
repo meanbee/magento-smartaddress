@@ -1,7 +1,7 @@
 <script type="text/javascript">
 //<![CDATA[
-		
-    var BASE_URL = '<?php echo $this->getUrl()?>';
+    
+    var BASE_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>';
 	
     new Ajax.Autocompleter("meanbee:billing_autocomplete", "autocomplete_choices_billing_street", BASE_URL + "postcode/finder/autocomplete", {
         minChars: 2,  
@@ -34,10 +34,6 @@
         callback: getStreet,
         afterUpdateElement: postcode_autocomplete_building
     });      
-    
-    /* Activate the listeners */
-    postcode_observe('billing');
-    postcode_observe('shipping');
 
     /* Set default country (Optional) */
     $('billing:country_id').value = 'GB';
@@ -45,6 +41,10 @@
  
     $('shipping:country_id').value = 'GB';
     shippingRegionUpdater.update();
+
+    /* Activate the listeners */
+    postcode_observe('billing');
+    postcode_observe('shipping');
 
 //]]>
 </script>

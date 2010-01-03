@@ -27,25 +27,34 @@ function getCountryAndPostcodeShipping(element, entry) {
                 + '&postcode=' + $F('shipping:postcode');
 }
 
+function showCorrectTextBoxes(a) {
+    var country = $F(a + ':country_id');
+
+    console.log(country);
+
+    if (country == 'GB') {
+        $('meanbee:' + a + '_address_find').show();
+        $('meanbee:' + a + '_address_selector').show();
+        $('meanbee:' + a + '_autocomplete').hide();
+        $('meanbee:' + a + '_autocomplete_building').hide();
+    } else if (country == 'US') {
+        $('meanbee:' + a + '_address_find').hide();
+        $('meanbee:' + a + '_address_selector').hide();
+        $('meanbee:' + a + '_autocomplete').show();
+        $('meanbee:' + a + '_autocomplete_building').show();
+    } else {
+        $('meanbee:' + a + '_address_find').hide();
+        $('meanbee:' + a + '_address_selector').hide();
+        $('meanbee:' + a + '_autocomplete').show();
+        $('meanbee:' + a + '_autocomplete_building').hide();
+    }
+}
+
 function postcode_observe(a) {
+    showCorrectTextBoxes(a);
+
     $(a + ':country_id').observe('change', function (e) {
-        var country = $F(a + ':country_id');
-        if (country == 'GB') {
-            $('meanbee:' + a + '_address_find').show();
-            $('meanbee:' + a + '_address_selector').show();
-            $('meanbee:' + a + '_autocomplete').hide();
-            $('meanbee:' + a + '_autocomplete_building').hide();
-        } else if (country == 'US') {
-            $('meanbee:' + a + '_address_find').hide();
-            $('meanbee:' + a + '_address_selector').hide();
-            $('meanbee:' + a + '_autocomplete').show();
-            $('meanbee:' + a + '_autocomplete_building').show();
-        } else {
-            $('meanbee:' + a + '_address_find').hide();
-            $('meanbee:' + a + '_address_selector').hide();
-            $('meanbee:' + a + '_autocomplete').show();
-            $('meanbee:' + a + '_autocomplete_building').hide();
-        }
+        showCorrectTextBoxes(a);
     });
 
     $('meanbee:' + a + '_address_find').observe('click', function (e) { 
