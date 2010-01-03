@@ -27,25 +27,32 @@ function getCountryAndPostcodeShipping(element, entry) {
                 + '&postcode=' + $F('shipping:postcode');
 }
 
+var country_prev = '';
 function showCorrectTextBoxes(a) {
     var country = $F(a + ':country_id');
+
+    if (country == country_prev) {
+        return;
+    }
 
     if (country == 'GB') {
         $('meanbee:' + a + '_address_find').show();
         $('meanbee:' + a + '_address_selector').show();
-        $('meanbee:' + a + '_autocomplete').hide();
-        $('meanbee:' + a + '_autocomplete_building').hide();
+        $('meanbee:' + a + '_street').hide();
+        $('meanbee:' + a + '_building').hide();
     } else if (country == 'US') {
         $('meanbee:' + a + '_address_find').hide();
         $('meanbee:' + a + '_address_selector').hide();
-        $('meanbee:' + a + '_autocomplete').show();
-        $('meanbee:' + a + '_autocomplete_building').show();
+        $('meanbee:' + a + '_street').show();
+        $('meanbee:' + a + '_building').show();
     } else {
         $('meanbee:' + a + '_address_find').hide();
         $('meanbee:' + a + '_address_selector').hide();
-        $('meanbee:' + a + '_autocomplete').show();
-        $('meanbee:' + a + '_autocomplete_building').hide();
+        $('meanbee:' + a + '_street').show();
+        $('meanbee:' + a + '_building').hide();
     }
+
+    country_prev = country;
 }
 
 function postcode_observe(a) {
