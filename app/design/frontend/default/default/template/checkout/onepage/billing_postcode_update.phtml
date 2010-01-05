@@ -38,7 +38,13 @@
             <legend><?php echo $this->__('New Address') ?></legend>
             <input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>" id="billing:address_id" />
             <ul>
-                                <li>
+                <li>
+                    <div class="input-box">
+                        <label for="billing:country_id"><?php echo $this->__('Country') ?> <span class="required">*</span></label><br />
+                        <?php echo $this->getCountryHtmlSelect('billing') ?>
+                    </div>
+                </li>
+                <li>
                     <div class="input-box">
                         <label for="billing:postcode"><?php echo $this->__('Postal Code') ?> <span class="required">*</span></label><br />
                         <input type="text" title="<?php echo $this->__('Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" />
@@ -51,7 +57,7 @@
                                 <li id="meanbee:billing_address_selector">&nbsp;</li>
                 <li id="meanbee:billing_street">
                     <div class="input-box input-box-wide">
-                        <label for="meanbee:billing_autocomplete"><?php echo $this->__('Street (Start typing..') ?></label>
+                        <label for="meanbee:billing_autocomplete"><?php echo $this->__('Street (Start typing...)') ?></label><br/>
                         <input type="text" title="Start typing street" id="meanbee:billing_autocomplete" name="autocomplete_parameter"  width="400" class="input-text"/>
                             <span id="indicator_billing_street" style="display: none">
                                    <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
@@ -60,7 +66,7 @@
                         </div></li>
                 <li id="meanbee:billing_building">
                     <div class="input-box input-box-wide">
-                        <label for="meanbee:billing_autocomplete_building"><?php echo $this->__('Building (Start typing..') ?></label>
+                        <label for="meanbee:billing_autocomplete_building"><?php echo $this->__('Building (Start typing...)') ?></label><br/>
                         <input type="text" title="Start typing building" id="meanbee:billing_autocomplete_building" name="autocomplete_parameter"  width="400" class="input-text" />
                             <span id="indicator_billing_building" style="display: none">
                                    <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
@@ -91,10 +97,6 @@
                     <input type="text" title="<?php echo $this->__('Town') ?>" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>" class="input-text required-entry" id="billing:city" />
                 </li>
                 <li>
-                    <div class="input-box">
-                        <label for="billing:country_id"><?php echo $this->__('Country') ?> <span class="required">*</span></label><br />
-                        <?php echo $this->getCountryHtmlSelect('billing') ?>
-                                        </div>
                     <div class="input-box">
                         <label for="billing:region"><?php echo $this->__('County') ?> <span class="required">*</span></label><br />
                         <select id="billing:region_id" name="billing[region_id]" title="<?php echo $this->__('County') ?>" class="validate-select" style="display:none;">

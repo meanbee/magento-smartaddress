@@ -39,6 +39,12 @@
                 <ul>
                     <li>
                         <div class="input-box">
+                        <label for="shipping:country_id"><?php echo $this->__('Country') ?> <span class="required">*</span></label><br />
+                        <?php echo $this->getCountryHtmlSelect('shipping') ?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-box">
                             <label for="shipping:postcode"><?php echo $this->__('Post Code') ?> <span class="required">*</span></label><br />
                             <input type="text" title="<?php echo $this->__('Post Code') ?>" name="shipping[postcode]" id="shipping:postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip-international required-entry" onchange="shipping.setSameAsBilling(false);" />
                         </div>
@@ -50,7 +56,7 @@
                     <li id="meanbee:shipping_address_selector">&nbsp;</li>
                     <li id="meanbee:shipping_street">
                       <div class="input-box input-box-wide">
-                            <label for="meanbee:shipping_autocomplete"><?php echo $this->__('Street (Start typing..') ?></label>
+                            <label for="meanbee:shipping_autocomplete"><?php echo $this->__('Street (Start typing...)') ?></label><br/>
                             <input type="text" title="Start typing street" id="meanbee:shipping_autocomplete" name="autocomplete_parameter"  width="400" class="input-text" />
                               <span id="indicator_shipping_street" style="display: none">
                                    <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
@@ -59,7 +65,7 @@
                           </div></li>                      
                 <li id="meanbee:shipping_building">
                     <div class="input-box input-box-wide">
-                        <label for="meanbee:shipping_autocomplete_building"><?php echo $this->__('Building (Start typing..') ?></label>
+                        <label for="meanbee:shipping_autocomplete_building"><?php echo $this->__('Building (Start typing...)') ?></label><br/>
                         <input type="text" title="Start typing building" id="meanbee:shipping_autocomplete_building" name="autocomplete_parameter"  width="400" class="input-text"/>
                             <span id="indicator_shipping_street" style="display: none">
                                    <img src="<?php echo $this->getSkinUrl('images/meanbee-address-loader.gif') ?>" alt="Working...">
