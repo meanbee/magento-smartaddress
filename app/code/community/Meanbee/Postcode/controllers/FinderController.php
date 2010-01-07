@@ -139,7 +139,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
                     $result = json_decode($jResult, true);
                     echo "<ul>";
                     if ( $result['error'] == true ) {
-                        echo "<li>Webmaster: " . $result['content'] . "</li>";
+                        echo "<li>" . $result['content'] . "</li>";
                     } else {
                         for ($i = 0; $i < count( $result['content'] ); $i++) {
                             echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";
@@ -167,7 +167,7 @@ class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Actio
             $result = json_decode($jResult, true);
             echo "<ul>";
             if ( $result['error'] == true ) { 
-                echo "<li>Webmaster: " . $result['content'] . "</li>";
+                echo "<li>" . $result['content'] . "</li>";
             } else {
                 for ($i = 0; $i < count( $result['content'] ); $i++) {
                     echo "<li id=" . substr($result['content'][$i]['id'],1) . ">" . $result['content'][$i]['description'] . "</li>";
