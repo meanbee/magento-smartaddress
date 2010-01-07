@@ -89,7 +89,10 @@ class Meanbee_Postcode_Model_Call {
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
     
         if (!empty($license) && !empty($account)) {
-            $street_id = (int) $street_id;
+            if (!is_numeric($street_id)) {
+                // @TODO Does it really have to be numeric?
+                return $this->_error('Street ID was not numeric!');
+            }
             
             try {
                 $result = array();
