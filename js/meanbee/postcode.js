@@ -277,21 +277,22 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                     $(a + ':city').value = '';
                 }
                 
-                if ($(a + ':region').style.display == 'none') {
-                    var region_f = 'region_id';
-                } else {
-                    var region_f = 'region';
-                }
-
                 if (typeof(j.content.state) != "undefined") {
-                    for (country in countryRegions) {
-                        if (country == j.content.country) {
+                    var county_done = false;
+
+                    for (country_item in countryRegions) {
+                        if (country_item == country) {
                             for (region in countryRegions[country]) {
                                 if (countryRegions[country][region].code == j.content.state) {
-                                    $(a + ':' + region_f).value = region;
+                                    $(a + ':region_id').value = region;
+                                    county_done = true;
                                 }
                             }
                         }
+                    }
+
+                    if (!county_done) {
+                        $(a + ':region').value = j.content.state;
                     }
                 } else {
                     $(a + ':region').value = '';
