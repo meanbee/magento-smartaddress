@@ -225,17 +225,17 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                 } else {
                     $(a + ':city').value = '';
                 }
-                
+
                 if (typeof(j.content.state) != "undefined") {
                     for (region in countryRegions['US']) {
-                        if (countryRegions[country][region].code == j.content.state) {
-                            $(a + ':region').value = region;
+                        if (countryRegions['US'][region].code == j.content.state) {
+                            $(a + ':region_id').value = region;
                         }
                     }
                 } else {
                     $(a + ':region').value = '';
                 }
-                
+
                 $(a + ':postcode').value = j.content.zip;
 
             } else {
@@ -277,12 +277,18 @@ new Ajax.Request(BASE_URL + 'postcode/finder/single/', {
                     $(a + ':city').value = '';
                 }
                 
+                if ($(a + ':region').style.display == 'none') {
+                    var region_f = 'region_id';
+                } else {
+                    var region_f = 'region';
+                }
+
                 if (typeof(j.content.state) != "undefined") {
                     for (country in countryRegions) {
                         if (country == j.content.country) {
                             for (region in countryRegions[country]) {
                                 if (countryRegions[country][region].code == j.content.state) {
-                                    $(a + ':region').value = region;
+                                    $(a + ':' + region_f).value = region;
                                 }
                             }
                         }
