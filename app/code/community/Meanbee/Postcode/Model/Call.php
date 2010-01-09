@@ -55,9 +55,11 @@ class Meanbee_Postcode_Model_Call {
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
         
         if (!empty($license) && !empty($account)) {
-            if (!is_numeric($id)) {
-                // @TODO Does it really have to be numeric?
-                return $this->_error('Address ID was not numeric!');
+            if( strcmp($country, "USA") == 0 || strcmp($country, "GBR") == 0) {
+                if (!is_numeric($id)) {
+                    // @TODO Does it really have to be numeric?
+                    return $this->_error('Address ID was not numeric!');
+                }
             }
 
             try {
