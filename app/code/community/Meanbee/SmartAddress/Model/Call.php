@@ -1,6 +1,6 @@
 <?php
 /**
- * Meanbee_Smart_Address
+ * Meanbee_SmartAddress
  *
  * This module was developed by Meanbee Internet Solutions Limited.  If you require any
  * support or have any questions please contact us at support@meanbee.com.
@@ -9,12 +9,12 @@
  *   - http://www.postcodeanywhere.co.uk/developers
  *
  * @category   Meanbee
- * @package    Meanbee_Smart_Address
+ * @package    Meanbee_SmartAddress
  * @author     Meanbee Internet Solutions <support@meanbee.com>
  * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
-class Meanbee_Postcode_Model_Call {    
+class Meanbee_SmartAddress_Model_Call {    
     public function findMultipleByPostcode($postcode, $street, $country) {
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));

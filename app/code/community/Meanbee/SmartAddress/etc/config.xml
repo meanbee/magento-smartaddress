@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Meanbee_Smart_Address
+ * Meanbee_SmartAddress
  *
  * This module was developed by Meanbee Internet Solutions Limited.  If you require any
  * support or have any questions please contact us at support@meanbee.com.
  *
  * @category   Meanbee
- * @package    Meanbee_Smart_Address
+ * @package    Meanbee_SmartAddress
  * @author     Meanbee Internet Solutions Limited <support@meanbee.com>
  * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
@@ -15,26 +15,26 @@
 -->
 <config>
 	<modules>
-		<Meanbee_Postcode>
+		<Meanbee_SmartAddress>
 			<version>2.0.1</version>
-		</Meanbee_Postcode>
+		</Meanbee_SmartAddress>
 	</modules>
 	
 	<global>
 		<models>
 			<postcode>
-				<class>Meanbee_Postcode_Model</class>
+				<class>Meanbee_SmartAddress_Model</class>
 			</postcode>
 		</models>
 		<blocks>
 			<postcode>
-				<class>Meanbee_Postcode_Block</class>
+				<class>Meanbee_SmartAddress_Block</class>
 			</postcode>
 		</blocks>
 		
 		<helpers>
 			<postcode>
-				<class>Meanbee_Postcode_Helper</class>
+				<class>Meanbee_SmartAddress_Helper</class>
 			</postcode>
 		</helpers>
 	</global>
@@ -44,7 +44,7 @@
 			<postcode>
 				<use>standard</use>
 				<args>
-						<module>Meanbee_Postcode</module>
+						<module>Meanbee_SmartAddress</module>
 						<frontName>postcode</frontName>
 				</args>
 			</postcode>

@@ -1,17 +1,17 @@
 <?php
 /**
- * Meanbee_Smart_Address
+ * Meanbee_SmartAddress
  *
  * This module was developed by Meanbee Internet Solutions Limited.  If you require any
  * support or have any questions please contact us at support@meanbee.com.
  *
  * @category   Meanbee
- * @package    Meanbee_Smart_Address
+ * @package    Meanbee_SmartAddress
  * @author     Meanbee Internet Solutions Limited <support@meanbee.com>
  * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
-class Meanbee_Postcode_FinderController extends Mage_Core_Controller_Front_Action {
+class Meanbee_SmartAddress_FinderController extends Mage_Core_Controller_Front_Action {
     public function preDispatch() {
         if (Mage::getStoreConfig('postcode/options/security') ) {
             if (isset($_SERVER['HTTP_REFERER'])) {                
