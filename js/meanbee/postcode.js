@@ -1,4 +1,4 @@
-/**
+/*
  * Meanbee_SmartAddress
  *
  * This module was developed by Meanbee Internet Solutions Limited.  If you require any
@@ -7,7 +7,7 @@
  * @category   Meanbee
  * @package    Meanbee_SmartAddress
  * @author     Meanbee Internet Solutions Limited <support@meanbee.com>
- * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited  (http://www.meanbee.com)
+ * @copyright  Copyright (c) 2009 Meanbee Internet Solutions Limited (http://www.meanbee.com)
  * @license    Single Site License, requiring consent from Meanbee Internet Solutions Limited
  */
 
@@ -27,13 +27,8 @@ function getCountryAndPostcodeShipping(element, entry) {
                 + '&postcode=' + $F('shipping:postcode');
 }
 
-var country_prev = '';
 function showCorrectTextBoxes(a) {
     var country = $F(a + ':country_id');
-
-    if (country == country_prev) {
-        return;
-    }
 
     if (country == 'GB') {
         $('meanbee:' + a + '_address_find').show();
@@ -51,8 +46,6 @@ function showCorrectTextBoxes(a) {
         $('meanbee:' + a + '_street').show();
         $('meanbee:' + a + '_building').hide();
     }
-
-    country_prev = country;
 }
 
 function postcode_observe(a) {
