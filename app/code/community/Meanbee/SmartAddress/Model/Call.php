@@ -237,8 +237,10 @@ class Meanbee_SmartAddress_Model_Call {
             $rowItems['description'] = "";
             $id_value = "'";
             foreach($row->attributes() as $key => $value) {
-                $rowItems['description'] .= strval($value) . ", ";
-                $id_value .= $key . '=' . strval($value) . '{}';
+                if ( strcmp( $key, "language" ) != 0 ) {
+                    $rowItems['description'] .= strval($value) . ", ";
+                    $id_value .= $key . '=' . strval($value) . '{}';
+                }
             }
             $id_value = substr($id_value,0,strlen($id_value)-2) . "'";
             $rowItems['id'] = strval($id_value);
