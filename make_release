@@ -1,0 +1,13 @@
+#!/bin/bash
+
+release=$1
+
+if [ -z $release ]
+    then
+    echo "usage: ./make_release \$release_number"
+    exit 1;
+fi
+
+tar -czf Meanbee_SmartAddress.${release}.tar.gz documentation/Meanbee_Postcode\ Documentation.pdf  code/* --exclude=.svn
+
+zip -r Meanbee_SmartAddress.${release}.zip documentation/Meanbee_Postcode\ Documentation.pdf code/* -x "*.svn*"
