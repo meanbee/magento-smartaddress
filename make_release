@@ -8,6 +8,6 @@ if [ -z $release ]
     exit 1;
 fi
 
-tar -czf Meanbee_SmartAddress.${release}.tar.gz documentation/Meanbee_Postcode\ Documentation.pdf  code/* --exclude=.svn
+tar -czf Meanbee_SmartAddress.${release}.tar.gz documentation/Meanbee_SmartAddress-Documentation.pdf  code/* --exclude=.svn
 
-zip -r Meanbee_SmartAddress.${release}.zip documentation/Meanbee_Postcode\ Documentation.pdf code/* -x "*.svn*"
+zip -r Meanbee_SmartAddress.${release}.zip documentation/Meanbee_SmartAddress-Documentation.pdf code/* -x "*.svn*"
