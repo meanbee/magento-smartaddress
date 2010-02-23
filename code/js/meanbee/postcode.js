@@ -78,7 +78,7 @@ function postcode_fetchOptionsUK(p, a) {
                     c += '<option value="' + j.content[i].id + '">' + j.content[i].description + '</option>'
                 }
                 c+= '</select>';
-                $('meanbee:' + a + '_address_selector').innerHTML = c + ' <button onclick="postcode_fillFields($F(\'meanbee:' + a + '_address_selector_select\'), $F(\'' + a + ':country_id\'), \'' + a + '\' )" type="button">Select Address</button>';
+                $('meanbee:' + a + '_address_selector').innerHTML = c + ' <button onclick="postcode_fillFields($F(\'meanbee:' + a + '_address_selector_select\'), $F(\'' + a + ':country_id\'), \'' + a + '\' )" type="button" class="button"><span><span>Select Address</span></span></button>';
                 //$('meanbee:' + a + '_address_selector').innerHTML += '<br /><small><b>Note:</b> Please select your address from the above drop down menu before pressing "Select Address".</small>';
             } else {
                 postcode_error(j.content, a);
