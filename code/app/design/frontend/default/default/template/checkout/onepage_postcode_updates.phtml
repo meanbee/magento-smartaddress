@@ -2,8 +2,10 @@
 //<![CDATA[
     
     var BASE_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>';
+	var AUTOCOMPLETE_URL_STREET = BASE_URL + "postcode/finder/autocomplete";
+	var AUTOCOMPLETE_URL_BUILDING = BASE_URL + "postcode/finder/autocomplete_building";
 	
-    new Ajax.Autocompleter("meanbee:billing_autocomplete", "autocomplete_choices_billing_street", BASE_URL + "postcode/finder/autocomplete", {
+    new Ajax.Autocompleter("meanbee:billing_autocomplete", "autocomplete_choices_billing_street", AUTOCOMPLETE_URL_STREET, {
         minChars: 2,  
         indicator: 'indicator_billing_street',
         paramName: 'street',
@@ -11,7 +13,7 @@
         afterUpdateElement: postcode_autocomplete_selected
     });
 
-    new Ajax.Autocompleter("meanbee:shipping_autocomplete", "autocomplete_choices_shipping_street", BASE_URL + "postcode/finder/autocomplete", {
+    new Ajax.Autocompleter("meanbee:shipping_autocomplete", "autocomplete_choices_shipping_street", AUTOCOMPLETE_URL_STREET, {
         minChars: 2,
         indicator: 'indicator_shipping_street',
         paramName: 'street',
@@ -19,7 +21,7 @@
         afterUpdateElement: postcode_autocomplete_selected
     }); 
     
-    new Ajax.Autocompleter("meanbee:billing_autocomplete_building", "autocomplete_choices_billing_building", BASE_URL + "postcode/finder/autocomplete_building", {
+    new Ajax.Autocompleter("meanbee:billing_autocomplete_building", "autocomplete_choices_billing_building", AUTOCOMPLETE_URL_BUILDING, {
         minChars: 2,  
         indicator: 'indicator_billing_building',
         paramName: 'building',
@@ -27,13 +29,13 @@
         afterUpdateElement: postcode_autocomplete_building
     });
 
-    new Ajax.Autocompleter("meanbee:shipping_autocomplete_building", "autocomplete_choices_shipping_building", BASE_URL + "postcode/finder/autocomplete_building", {
+    new Ajax.Autocompleter("meanbee:shipping_autocomplete_building", "autocomplete_choices_shipping_building", AUTOCOMPLETE_URL_BUILDING, {
         minChars: 2,
         indicator: 'indicator_shipping_building',
         paramName: 'building',
         callback: getStreet,
         afterUpdateElement: postcode_autocomplete_building
-    });      
+    });  
 
     /* Set default country (Optional) */
     $('billing:country_id').value = 'GB';
