@@ -140,6 +140,8 @@ class Meanbee_SmartAddress_FinderController extends Mage_Core_Controller_Front_A
                     echo "<ul>";
                     if ( $result['error'] == true ) {
                         echo "<li>" . $result['content'] . "</li>";
+                    } elseif (  count( $result['content'] ) == 0 ) {
+                        echo "<li>No matching streets</li>";
                     } else {
                         for ($i = 0; $i < count( $result['content'] ); $i++) {
                             echo "<li id=" . $result['content'][$i]['id'] . ">" . $result['content'][$i]['description'] . "</li>";

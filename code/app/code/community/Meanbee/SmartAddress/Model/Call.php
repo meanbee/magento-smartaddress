@@ -53,7 +53,10 @@ class Meanbee_SmartAddress_Model_Call {
     public function findSingleAddressById($id, $country) {        
         $license = trim(Mage::getStoreConfig('postcode/auth/license'));
         $account = trim(Mage::getStoreConfig('postcode/auth/account'));
-        
+       
+        if (empty ($id)) {
+            return;
+        }
         if (!empty($license) && !empty($account)) {
             if( strcmp($country, "USA") == 0 || strcmp($country, "GBR") == 0) {
                 if (!is_numeric($id)) {
@@ -361,6 +364,9 @@ class Meanbee_SmartAddress_Model_Call {
 
     protected function _findSingleAddressRequestWorld($id) {
         // Split on {} to give each field back
+        if (empty($id) ) {
+            return array();
+        }
         $rows = explode('{}', $id);
         $rowItems = "";
         foreach($rows as $row) {
