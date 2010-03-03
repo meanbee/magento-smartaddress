@@ -35,26 +35,48 @@ function showCorrectTextBoxes(a) {
         $('meanbee:' + a + '_address_selector').show();
         $('meanbee:' + a + '_street').hide();
         $('meanbee:' + a + '_building').hide();
+        $('meanbee_smart_address_info_' + a).innerHTML = "Make things easy with our Address Finder!<br/>Enter your postcode and click the 'Find Address' button.";
     } else if (country == 'US') {
         $('meanbee:' + a + '_address_find').hide();
         $('meanbee:' + a + '_address_selector').hide();
         $('meanbee:' + a + '_street').show();
         $('meanbee:' + a + '_building').show();
+        $('meanbee_smart_address_info_' + a).innerHTML = "Make things easy with our Address Finder!<br/>Enter your zipcode and then start typing your street and building to autocomplete your address.";
     } else {
         $('meanbee:' + a + '_address_find').hide();
         $('meanbee:' + a + '_address_selector').hide();
         $('meanbee:' + a + '_street').show();
         $('meanbee:' + a + '_building').hide();
+        $('meanbee_smart_address_info_' + a).innerHTML = "Make things easy with our Address Finder!<br/>Enter your postcode and then start typing your street to autocomplete your address.";
     }
 }
 
 function postcode_observe(a) {
     showCorrectTextBoxes(a);
 
+    // Observe user changing the country field
     $(a + ':country_id').observe('change', function (e) {
         showCorrectTextBoxes(a);
     });
 
+    // Show autocomplete drop downs when field is active, hide if not.
+    $('meanbee:' + a + '_autocomplete').observe('focus',function (e) {
+        $('autocomplete_choices_' + a + '_street').setStyle({display:'block'});
+    });
+
+    $('meanbee:' + a + '_autocomplete').observe('blur',function (e) {
+        $('autocomplete_choices_' + a + '_street').setStyle({display:'hidden'});
+    });
+
+    $('meanbee:' + a + '_autocomplete_building').observe('focus',function (e) {
+        $('autocomplete_choices_' + a + '_building').setStyle({display:'block'});
+    });     
+    
+    $('meanbee:' + a + '_autocomplete_building').observe('blur',function (e) {
+        $('autocomplete_choices_' + a + '_building').setStyle({display:'hidden'});
+    }); 
+
+    // Listen for the UK find address button being clicked
     $('meanbee:' + a + '_address_find').observe('click', function (e) { 
         var postcode = $F(a + ':postcode');
         if (postcode != '') { 

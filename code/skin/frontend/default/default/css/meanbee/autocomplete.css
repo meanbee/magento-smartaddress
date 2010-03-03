@@ -34,3 +34,7 @@ div.autocomplete ul li {
 .input-box-wide {
     width: auto !important;
 }
+
+#meanbee_smart_address_info_billing, #meanbee_smart_address_info_shipping {
+    font-weight:bold;
+}

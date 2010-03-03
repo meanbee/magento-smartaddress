@@ -42,6 +42,7 @@
                         <label for="shipping:country_id"><?php echo $this->__('Country') ?> <span class="required">*</span></label><br />
                         <?php echo $this->getCountryHtmlSelect('shipping') ?>
                         </div>
+                        <span id="meanbee_smart_address_info_shipping"></span>
                     </li>
                     <li>
                         <div class="input-box">
@@ -50,7 +51,7 @@
                         </div>
                         <div class="input-box">
                           <br />
-                          <button id="meanbee:shipping_address_find" type="button">Find Address</button>
+                          <button id="meanbee:shipping_address_find" class="button" type="button">Find Address</button>
                         </div>
                     </li>
                     <li id="meanbee:shipping_address_selector">&nbsp;</li>
