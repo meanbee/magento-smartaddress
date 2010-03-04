@@ -61,7 +61,9 @@ function postcode_observe(a) {
 
     // Show autocomplete drop downs when field is active, hide if not.
     $('meanbee:' + a + '_autocomplete').observe('focus',function (e) {
-        $('autocomplete_choices_' + a + '_street').setStyle({display:'block'});
+        if ($('autocomplete_choices_' + a + '_street').children.length > 0) {
+            $('autocomplete_choices_' + a + '_street').setStyle({display:'block'});
+        }
     });
 
     $('meanbee:' + a + '_autocomplete').observe('blur',function (e) {
@@ -69,7 +71,9 @@ function postcode_observe(a) {
     });
 
     $('meanbee:' + a + '_autocomplete_building').observe('focus',function (e) {
-        $('autocomplete_choices_' + a + '_building').setStyle({display:'block'});
+        if ($('autocomplete_choices_' + a + '_building').children.length > 0) {
+            $('autocomplete_choices_' + a + '_building').setStyle({display:'block'});
+        }
     });     
     
     $('meanbee:' + a + '_autocomplete_building').observe('blur',function (e) {
@@ -85,6 +89,7 @@ function postcode_observe(a) {
         } 
     }); 
 }
+
 
 function postcode_fetchOptionsUK(p, a) {
     new Ajax.Request(BASE_URL + 'postcode/finder/multiple/', {
