@@ -57,29 +57,8 @@
 			</updates>
 		</layout>
 	</frontend>
-
-
-    <admin>
-        <routers>
-            <postcode>
-                <use>admin</use>
-                <args>
-                        <module>Meanbee_SmartAddress</module>
-                        <frontName>postcode</frontName>
-                </args>
-            </postcode>
-        </routers>
-    </admin>
 	
 	<adminhtml>
-        <layout>
-            <updates>
-                <postcode>
-                    <file>postcode.xml</file>
-                </postcode>
-            </updates>
-        </layout>
-
 		<acl>
 			<all>
 				<title>Allow Everything</title>
