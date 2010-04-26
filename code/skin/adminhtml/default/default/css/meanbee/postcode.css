@@ -1,0 +1,72 @@
+/** Admin Sales Order Create Page **/
+
+div.meanbee_address_finder label {
+    padding:0 5px 0 14px;
+}
+
+div.meanbee_address_finder input {
+    margin-right:5px;
+}
+
+div.meanbee_address_finder p{
+    margin-left:14px;
+}
+
+div.meanbee_address_finder .form-list td.value select {
+    width:97.5%;
+}
+
+div.meanbee_address_finder button {
+    float:right;
+    margin-right:8px;
+    margin-top:3px;
+}
+
+div.meanbee_address_finder div.order-address table {
+    width:100%;
+}
+
+div.meanbee_address_finder div.order-address table td.label label {
+    width:150px;
+}
+
+div.autocomplete {
+    position:absolute;
+    background-color:white;
+    border:1px solid #888;
+    margin:0;
+    padding:0;
+    width:400px;
+    max-height:400px;
+    overflow:auto;
+}
+
+div.autocomplete ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+div.autocomplete ul li.selected { background-color: #ffb;}
+
+div.autocomplete ul li {
+    list-style-type:none;
+    display:block;
+    margin:0;
+    padding:2px;
+    height:32px;
+    cursor:pointer;
+}
+
+#indicator_billing_street, #indicator_shipping_street, #indicator_billing_building, #indicator_shipping_building {
+    float:right;
+    padding-left:10px;
+}
+
+.input-box-wide {
+    width: auto !important;
+}
+
+#meanbee_smart_address_info_billing, #meanbee_smart_address_info_shipping {
+    font-weight:bold;
+}
