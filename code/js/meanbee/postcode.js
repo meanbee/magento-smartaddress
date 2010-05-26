@@ -86,7 +86,9 @@ function postcode_observe(a) {
         if (postcode != '') { 
             $('meanbee:' + a + '_address_selector').innerHTML = "Loading..."; 
             postcode_fetchOptionsUK(postcode, a); 
-        } 
+        } else {
+            alert ('Please enter your postcode.');
+        }
     }); 
 }
 
