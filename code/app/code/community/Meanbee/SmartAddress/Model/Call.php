@@ -148,7 +148,7 @@ class Meanbee_SmartAddress_Model_Call {
         $url .= "&machine_id=" . urlencode($machine_id);
         
         //Make the request
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         $output = array();
         
         //Check for an error
@@ -187,7 +187,7 @@ class Meanbee_SmartAddress_Model_Call {
         $url .= "&machine_id=" . urlencode($machine_id);
         
         //Make the request
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         
         $output = array();
          
@@ -226,7 +226,7 @@ class Meanbee_SmartAddress_Model_Call {
         $url .= "&license_code=" . urlencode($license_code);
 
         //Make the request
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         $output = array();
 
         //Check for an error
@@ -271,7 +271,7 @@ class Meanbee_SmartAddress_Model_Call {
         
         //Make the request
         
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         $output = array();
 
         //Check for an error
@@ -306,7 +306,7 @@ class Meanbee_SmartAddress_Model_Call {
         $url .= "&machine_id=" . urlencode($machine_id);
      
         //Make the request
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         $output = array();
 
         //Check for an error
@@ -338,7 +338,7 @@ class Meanbee_SmartAddress_Model_Call {
         $url .= "&machine_id=" . urlencode($machine_id);
 
         //Make the request
-        $data = simplexml_load_string(file_get_contents($url));
+        $data = simplexml_load_string($this->_makeRequest($url));
         $output = array();
 
         //Check for an error
@@ -379,5 +379,24 @@ class Meanbee_SmartAddress_Model_Call {
         // Return the result.
         return $output;
     }
+
+    /**
+     * Fetch the contents at a URL.  Use cURL if available.
+     */
+    protected function _makeRequest($url) {
+        if (function_exists("curl_setopt")) {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+            curl_setopt($curl, CURLOPT_URL, $url);
+            $data = curl_exec($curl);
+            curl_close($curl);
+   
+            return $data;
+        } else {
+            return file_get_contents($url);
+        }
+    }
+
 }
 ?>
