@@ -1,7 +1,12 @@
 <script type="text/javascript">
 //<![CDATA[
     
-    var BASE_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, true) ?>';
+    var BASE_URL = '<?php echo Mage::getBaseUrl() ?>';
+
+    if(window.location.href.match('https://') && !BASE_URL.match('https://')){
+        BASE_URL = BASE_URL.replace('http://', 'https://')
+    }
+
 	var AUTOCOMPLETE_URL_STREET = BASE_URL + "postcode/finder/autocomplete";
 	var AUTOCOMPLETE_URL_BUILDING = BASE_URL + "postcode/finder/autocomplete_building";
 	
