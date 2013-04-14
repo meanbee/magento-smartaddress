@@ -17,3 +17,5 @@ code/skin/adminhtml/default/default/images/meanbee-*       skin/adminhtml/defaul
 
 code/skin/frontend/base/default/css/meanbee/*           skin/frontend/base/default/css/meanbee/
 code/skin/frontend/base/default/images/meanbee-*        skin/frontend/base/default/images/
+
+package.xml var/connect/Meanbee_SmartAddress.xml
