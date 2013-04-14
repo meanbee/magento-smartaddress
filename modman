@@ -15,5 +15,5 @@ code/js/meanbee/* js/meanbee/
 code/skin/adminhtml/default/default/css/meanbee/*          skin/adminhtml/default/default/css/meanbee/
 code/skin/adminhtml/default/default/images/meanbee-*       skin/adminhtml/default/default/images/
 
-code/skin/frontend/default/default/css/meanbee/*           skin/frontend/default/default/css/meanbee/
-code/skin/frontend/default/default/images/meanbee-*        skin/frontend/default/default/images/
+code/skin/frontend/base/default/css/meanbee/*           skin/frontend/base/default/css/meanbee/
+code/skin/frontend/base/default/images/meanbee-*        skin/frontend/base/default/images/
