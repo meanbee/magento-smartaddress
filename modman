@@ -8,6 +8,7 @@ code/app/design/frontend/base/default/layout/*             app/design/frontend/b
 
 code/app/design/frontend/base/default/template/checkout/onepage_postcode_updates.phtml app/design/frontend/base/default/template/checkout/
 code/app/design/frontend/base/default/template/checkout/onepage/* app/design/frontend/base/default/template/checkout/onepage/
+code/app/design/frontend/base/default/template/persistent/checkout/onepage/* app/design/frontend/base/default/template/persistent/checkout/onepage/
 
 code/js/meanbee/* js/meanbee/
 
