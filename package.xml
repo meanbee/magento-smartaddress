@@ -1,5 +1,5 @@
 <_>
-   <form_key>2XGDwnTNJoeSM1kT</form_key>
+   <form_key>pWRHVXmFFDNDRUxG</form_key>
    <name>Meanbee_SmartAddress</name>
    <channel>community</channel>
    <version_ids>
@@ -40,7 +40,7 @@
             <max/>
          </max>
          <files>
-            <files>    </files>
+            <files>     </files>
          </files>
       </package>
       <extension>
@@ -57,6 +57,7 @@
    </depends>
    <contents>
       <target>
+         <target>mageweb</target>
          <target>mageetc</target>
          <target>magedesign</target>
          <target>magedesign</target>
@@ -75,14 +76,15 @@
          <target>magecommunity</target>
       </target>
       <path>
+         <path>code/app/code/community/Meanbee/SmartAddress</path>
          <path>modules/Meanbee_SmartAddress.xml</path>
          <path>adminhtml/default/default/layout/postcode.xml</path>
          <path>adminhtml/default/default/template/meanbee</path>
          <path>frontend/base/default/layout/postcode.xml</path>
-         <path>frontend/base/default/template/checkout/onepage_postcode_update.phtml</path>
-         <path>frontend/base/default/template/checkout/onepage/1.6_billing_postcode_update.phtml</path>
-         <path>frontend/base/default/template/checkout/onepage/1.6_shipping_postcode_update.phtml</path>
-         <path>frontend/base/default/template/checkout/onepage/1.7_shipping_postcode_update.phtml</path>
+         <path>frontend/base/default/template/checkout/onepage_postcode_updates.phtml</path>
+         <path>frontend/base/default/template/checkout/onepage/1.6_billing_postcode_updates.phtml</path>
+         <path>frontend/base/default/template/checkout/onepage/1.6_shipping_postcode_updates.phtml</path>
+         <path>frontend/base/default/template/checkout/onepage/1.7_shipping_postcode_updates.phtml</path>
          <path>frontend/base/default/template/persistent/checkout/onepage/1.7_billing_postcode_updates.phtml</path>
          <path>js/meanbee/postcode.js</path>
          <path>js/meanbee/postcode_admin.js</path>
@@ -93,6 +95,7 @@
          <path>Meanbee/SmartAddress</path>
       </path>
       <type>
+         <type>dir</type>
          <type>file</type>
          <type>file</type>
          <type>dir</type>
@@ -127,8 +130,10 @@
          <include/>
          <include/>
          <include/>
+         <include/>
       </include>
       <ignore>
+         <ignore/>
          <ignore/>
          <ignore/>
          <ignore/>
