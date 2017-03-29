@@ -1,6 +1,6 @@
 Meanbee SmartAddress Postcode Anywhere Extension
 =====================
-Building on the success of the Meanbee_Postcode module for Magento, we are pleased to announce the arrival of MeanbeeSmartAddress. It is an international version of MeanbeePostcode, created once again with the help of our friends from PostcodeAnywhere.co.uk. Meanbee_SmartAddress can auto-complete international addresses for your customers at the Magento checkout and also when creating orders in Magento Admin.
+Building on the success of the [Meanbee_Postcode](https://github.com/meanbee/magento-pca-predict) module for Magento, we are pleased to announce the arrival of MeanbeeSmartAddress. It is an international version of MeanbeePostcode, created once again with the help of our friends from [PCA Predict](https://www.postcodeanywhere.co.uk/partners/INDIV52356). Meanbee_SmartAddress can auto-complete international addresses for your customers at the Magento checkout and also when creating orders in Magento Admin.
 
 Using the UK, US and International address completion module to auto-complete addresses benefits both you and your customers
 
@@ -12,7 +12,7 @@ Using the UK, US and International address completion module to auto-complete ad
 
 UK and US address lookups are completed to a building level and use 1 credit. International lookups are completed to a street level and use 2 credits. Countries supported include North America, Europe, Australasia and parts of Asia.
 
-Please note that you will need to purchase credits from [PostcodeAnywhere.co.uk](PostcodeAnywhere.co.uk) in order to use this module successfully. Their prices start from 50GBP for 1000 credits. Click [here](PostcodeAnywhere.co.uk) to find out more.
+Please note that you will need to purchase credits from [pcapredict.com](https://www.postcodeanywhere.co.uk/partners/INDIV52356) in order to use this module successfully. Their prices start from 50GBP for 1000 credits. Click [here](https://www.postcodeanywhere.co.uk/partners/INDIV52356) to find out more.
 
 ##### Explanation Videos
 [International Address Finder for Magento](https://vimeo.com/12821304)
